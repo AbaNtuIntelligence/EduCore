@@ -43,42 +43,25 @@ export default function Header() {
               ⬇ Download Catalogue (PDF)
             </Link>
 
-            {/* Hidden Admin Link - Only visible when authenticated */}
+            {/* Admin Section - Only visible when authenticated */}
             {!loading && isAuthenticated && (
               <>
                 <span className="text-gray-400">|</span>
                 <div className="relative group">
-                  <span className="text-gray-400 hover:text-[#F05A28] transition cursor-pointer text-sm">
-                    ⚙️ Admin
+                  <span className="text-gray-400 hover:text-[#F05A28] transition cursor-pointer text-sm flex items-center gap-1">
+                    ⚙️ Admin <span className="text-[10px]">▼</span>
                   </span>
                   <div className="absolute right-0 top-full mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                     <div className="bg-[#1A2B4C] border border-white/10 rounded-lg shadow-xl p-2 min-w-[160px]">
+                      {/* Admin Dashboard */}
                       <Link
                         href="/admin"
                         className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
                       >
-                        📊 Dashboard
-                      </Link>
-                      <Link
-                        href="/admin/login"
-                        className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
-                      >
-                        🔐 Admin Login
+                        📊 Admin Dashboard
                       </Link>
                       <div className="border-t border-white/10 my-1"></div>
-                      <Link
-                        href="/catalogue"
-                        className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
-                      >
-                        📦 Catalogue
-                      </Link>
-                      <Link
-                        href="/request-quote"
-                        className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
-                      >
-                        📝 Request Quote
-                      </Link>
-                      <div className="border-t border-white/10 my-1"></div>
+                      {/* Logout */}
                       <button
                         onClick={async () => {
                           await fetch('/api/auth/logout', { method: 'POST' });
@@ -102,7 +85,7 @@ export default function Header() {
                   href="/admin/login"
                   className="text-sm text-gray-400 hover:text-[#F05A28] transition"
                 >
-                  🔐 Login
+                  🔐 Admin Login
                 </Link>
               </>
             )}
@@ -194,7 +177,9 @@ export default function Header() {
               <div className="border-t border-gray-200 my-2"></div>
               {!loading && isAuthenticated ? (
                 <>
-                  <Link href="/admin" className="block text-[#F05A28] hover:text-[#d94a1e] transition font-medium">📊 Dashboard</Link>
+                  <Link href="/admin" className="block text-[#F05A28] hover:text-[#d94a1e] transition font-medium">
+                    📊 Admin Dashboard
+                  </Link>
                   <button
                     onClick={async () => {
                       await fetch('/api/auth/logout', { method: 'POST' });
