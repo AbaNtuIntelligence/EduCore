@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #1A2B4C;
+  --secondary: #F05A28;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

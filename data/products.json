@@ -1,0 +1,275 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "A4 80gsm Copy Paper - Box of 5 Reams",
+      "slug": "a4-copy-paper-80gsm",
+      "category": "stationery",
+      "description": "Premium quality A4 copy paper for everyday printing and photocopying. Bright white finish, suitable for double-sided printing.",
+      "features": [
+        "80gsm weight",
+        "Acid-free for longevity",
+        "Suitable for double-sided printing",
+        "Bright white finish"
+      ],
+      "price": "R 285.00",
+      "unit": "per box",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Copy+Paper",
+      "sku": "EDU-PAP-001",
+      "featured": true,
+      "stock": "In Stock"
+    },
+    {
+      "id": 2,
+      "name": "Executive Office Desk - 1800mm",
+      "slug": "executive-office-desk",
+      "category": "furniture",
+      "description": "Modern executive desk with sleek finish and built-in cable management. Spacious work surface for maximum productivity.",
+      "features": [
+        "1800mm x 900mm x 750mm",
+        "High-density MDF",
+        "Built-in cable management",
+        "5 colour options available"
+      ],
+      "price": "R 4,250.00",
+      "unit": "per unit",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Executive+Desk",
+      "sku": "EDU-FUR-012",
+      "featured": true,
+      "stock": "In Stock"
+    },
+    {
+      "id": 3,
+      "name": "3-Ply Disposable Face Masks - Box of 50",
+      "slug": "3-ply-disposable-face-masks",
+      "category": "ppe",
+      "description": "High-quality disposable 3-ply face masks with elastic ear loops. Provides reliable protection against droplets and airborne particles.",
+      "features": [
+        "3-ply protection",
+        "Elastic ear loops",
+        "Breathable material",
+        "CE certified"
+      ],
+      "price": "R 125.00",
+      "unit": "per box",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Face+Masks",
+      "sku": "EDU-PPE-003",
+      "featured": true,
+      "stock": "In Stock"
+    },
+    {
+      "id": 4,
+      "name": "Industrial Cleaning Chemical - 5L",
+      "slug": "industrial-cleaning-chemical",
+      "category": "cleaning",
+      "description": "Multi-purpose industrial cleaning chemical effective on all hard surfaces. Concentrated formula for maximum value.",
+      "features": [
+        "Kills 99.9% of bacteria",
+        "Concentrated formula",
+        "Available in multiple fragrances",
+        "5L container"
+      ],
+      "price": "R 185.00",
+      "unit": "per 5L",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Cleaning+Chemical",
+      "sku": "EDU-CLN-005",
+      "featured": false,
+      "stock": "In Stock"
+    },
+    {
+      "id": 5,
+      "name": "Gel Pens - Box of 50",
+      "slug": "gel-pens-box-50",
+      "category": "stationery",
+      "description": "Smooth writing gel pens with vibrant ink. Perfect for office, school, and everyday use. Available in black, blue, and red.",
+      "features": [
+        "0.7mm tip",
+        "Vibrant ink colours",
+        "Comfortable grip",
+        "Long-lasting"
+      ],
+      "price": "R 95.00",
+      "unit": "per box of 50",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Gel+Pens",
+      "sku": "EDU-PEN-023",
+      "featured": false,
+      "stock": "In Stock"
+    },
+    {
+      "id": 6,
+      "name": "Ergonomic Office Chair",
+      "slug": "ergonomic-office-chair",
+      "category": "furniture",
+      "description": "Premium ergonomic office chair with adjustable lumbar support and headrest. Designed for all-day comfort and productivity.",
+      "features": [
+        "Adjustable lumbar support",
+        "Height adjustment",
+        "Headrest included",
+        "Breathable mesh back"
+      ],
+      "price": "R 3,850.00",
+      "unit": "per unit",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Office+Chair",
+      "sku": "EDU-FUR-035",
+      "featured": false,
+      "stock": "In Stock"
+    },
+    {
+      "id": 7,
+      "name": "Hygiene Hand Sanitiser - 5L",
+      "slug": "hand-sanitiser-5l",
+      "category": "cleaning",
+      "description": "High-strength alcohol-based hand sanitiser with moisturising agents. Kills 99.9% of germs and bacteria.",
+      "features": [
+        "70% alcohol",
+        "Moisturising formula",
+        "Available in 5L and 25L",
+        "Safe for frequent use"
+      ],
+      "price": "R 165.00",
+      "unit": "per 5L",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Sanitiser",
+      "sku": "EDU-HYG-008",
+      "featured": false,
+      "stock": "In Stock"
+    },
+    {
+      "id": 8,
+      "name": "Safety Overalls - High Visibility",
+      "slug": "safety-overalls-high-visibility",
+      "category": "ppe",
+      "description": "High-visibility safety overalls with reflective stripes. Certified for workplace safety and comfort.",
+      "features": [
+        "Hi-vis yellow/orange",
+        "Reflective stripes",
+        "Durable 100% polyester",
+        "Multiple sizes available"
+      ],
+      "price": "R 225.00",
+      "unit": "per unit",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Safety+Overalls",
+      "sku": "EDU-PPE-067",
+      "featured": false,
+      "stock": "In Stock"
+    },
+    {
+      "id": 9,
+      "name": "A3 Filing Cabinet - 4 Drawer",
+      "slug": "a3-filing-cabinet",
+      "category": "furniture",
+      "description": "Heavy-duty 4-drawer filing cabinet. Perfect for A3 documents and large capacity filing needs.",
+      "features": [
+        "4 spacious drawers",
+        "Heavy-duty steel construction",
+        "Secure locking mechanism",
+        "A3 size compatible"
+      ],
+      "price": "R 2,650.00",
+      "unit": "per unit",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Filing+Cabinet",
+      "sku": "EDU-FUR-089",
+      "featured": false,
+      "stock": "In Stock"
+    },
+    {
+      "id": 10,
+      "name": "Disposable Gloves - Box of 100",
+      "slug": "disposable-gloves-box-100",
+      "category": "ppe",
+      "description": "Powder-free disposable gloves for hygiene and safety. Latex-free and suitable for all general applications.",
+      "features": [
+        "Powder-free",
+        "Latex-free",
+        "Available in multiple sizes",
+        "Box of 100"
+      ],
+      "price": "R 75.00",
+      "unit": "per box of 100",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Disposable+Gloves",
+      "sku": "EDU-PPE-042",
+      "featured": false,
+      "stock": "In Stock"
+    },
+    {
+      "id": 11,
+      "name": "A4 Spiral Notebook - Pack of 10",
+      "slug": "spiral-notebook-pack-10",
+      "category": "stationery",
+      "description": "Premium A4 spiral notebooks with durable cover and 80gsm pages. Perfect for note-taking and record keeping.",
+      "features": [
+        "80gsm paper",
+        "Durable cover",
+        "Spiral binding",
+        "Available in multiple colours"
+      ],
+      "price": "R 45.00",
+      "unit": "per pack of 10",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Spiral+Notebook",
+      "sku": "EDU-NTB-016",
+      "featured": false,
+      "stock": "In Stock"
+    },
+    {
+      "id": 12,
+      "name": "Toilet Paper - 48 Pack",
+      "slug": "toilet-paper-48-pack",
+      "category": "cleaning",
+      "description": "Premium 3-ply toilet paper in a convenient bulk pack. Soft, strong, and hygienic for business and institutional use.",
+      "features": [
+        "3-ply softness",
+        "Bulk pack of 48 rolls",
+        "Individually wrapped",
+        "Septic safe"
+      ],
+      "price": "R 145.00",
+      "unit": "per pack of 48",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Toilet+Paper",
+      "sku": "EDU-HYG-092",
+      "featured": false,
+      "stock": "In Stock"
+    },
+    {
+      "id": 13,
+      "name": "AbaNtu Logo",
+      "slug": "abantu-logo",
+      "category": "stationery",
+      "description": "Stunning",
+      "features": [
+        "Super"
+      ],
+      "price": "150 00",
+      "unit": "Each",
+      "image": "/images/products/1782738692108-by22e8.png",
+      "sku": "EDU-ABA",
+      "featured": true,
+      "stock": "In Stock"
+    }
+  ],
+  "categories": [
+    {
+      "id": "all",
+      "name": "All Products",
+      "count": 13
+    },
+    {
+      "id": "stationery",
+      "name": "Stationery",
+      "count": 4
+    },
+    {
+      "id": "furniture",
+      "name": "Office Furniture",
+      "count": 3
+    },
+    {
+      "id": "ppe",
+      "name": "PPE & Safety",
+      "count": 3
+    },
+    {
+      "id": "cleaning",
+      "name": "Cleaning & Hygiene",
+      "count": 3
+    }
+  ]
+}
