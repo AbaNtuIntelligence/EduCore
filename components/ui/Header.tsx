@@ -20,7 +20,7 @@ export default function Header() {
   return (
     <>
       {/* Top Bar - Hidden on mobile */}
-      <div className="hidden bg-[#1A2B4C] text-white lg:block border-b border-white/10">
+      <div className="hidden bg-[#1A2B4C] text-white lg:block border-b border-white/10 relative z-50">
         <div className="container mx-auto flex items-center justify-between px-4 py-2">
           <span className="text-sm">Your Trusted Partner for Stationery, PPE & Hygiene Solutions</span>
           <div className="flex items-center space-x-4">
@@ -47,16 +47,17 @@ export default function Header() {
             {!loading && isAuthenticated && (
               <>
                 <span className="text-gray-400">|</span>
-                <div className="relative group">
+                <div className="relative group inline-block">
                   <span className="text-gray-400 hover:text-[#F05A28] transition cursor-pointer text-sm flex items-center gap-1">
                     ⚙️ Admin <span className="text-[10px]">▼</span>
                   </span>
-                  <div className="absolute right-0 top-full mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <div className="bg-[#1A2B4C] border border-white/10 rounded-lg shadow-xl p-2 min-w-[160px]">
+                  {/* Dropdown - higher z-index to appear above everything */}
+                  <div className="absolute right-0 top-full mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[9999]">
+                    <div className="bg-[#1A2B4C] border border-white/10 rounded-lg shadow-2xl p-2 min-w-[160px]">
                       {/* Admin Dashboard */}
                       <Link
                         href="/admin"
-                        className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
+                        className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition whitespace-nowrap"
                       >
                         📊 Admin Dashboard
                       </Link>
@@ -67,7 +68,7 @@ export default function Header() {
                           await fetch('/api/auth/logout', { method: 'POST' });
                           window.location.href = '/';
                         }}
-                        className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-white/5 rounded transition"
+                        className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-white/5 rounded transition whitespace-nowrap"
                       >
                         🚪 Logout
                       </button>
@@ -93,8 +94,8 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Main Navigation */}
-      <header className="sticky top-0 z-50 bg-white shadow-md">
+      {/* Main Navigation - lower z-index than top bar */}
+      <header className="sticky top-0 z-40 bg-white shadow-md">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
           {/* Logo */}
           <Link href="/" className="flex items-center">
@@ -166,7 +167,7 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t bg-white shadow-lg">
+          <div className="md:hidden border-t bg-white shadow-lg relative z-50">
             <div className="container mx-auto px-4 py-4 space-y-3">
               <Link href="/" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">Home</Link>
               <Link href="/catalogue" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">Catalogue</Link>
