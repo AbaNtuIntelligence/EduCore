@@ -1,16 +1,17 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
-import { getProducts, getProductBySlug } from '@/lib/products';
+import { getProductBySlug } from '@/lib/products';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default async function ProductPage({ params }: PageProps) {
-  const product = getProductBySlug(params.slug);
+  // Await the params Promise
+  const { slug } = await params;
+  const product = getProductBySlug(slug);
 
   if (!product) {
     notFound();
