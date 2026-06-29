@@ -1,6 +1,11 @@
+"use client";
+
 import Link from 'next/link';
+import { useAuth } from '@/lib/useAuth';
 
 export default function Footer() {
+  const { isAuthenticated, loading } = useAuth();
+
   return (
     <footer className="bg-[#1A2B4C] text-white border-t border-white/10">
       <div className="container mx-auto px-4 py-12">
@@ -78,13 +83,15 @@ export default function Footer() {
             <div className="mt-6 border-t border-white/10 pt-4 text-xs text-gray-400">
               <p>&copy; 2026 EDUCORE STATIONERY AND HYGIENE SUPPLIES (PTY) LTD</p>
               <p className="mt-1">All rights reserved.</p>
-              {/* Hidden Admin Link in Footer - Very subtle */}
-              <Link 
-                href="/admin" 
-                className="text-[#1A2B4C] hover:text-[#F05A28] transition text-[8px] tracking-widest uppercase opacity-20 hover:opacity-100"
-              >
-                Admin
-              </Link>
+              {/* Admin link - only visible when authenticated */}
+              {!loading && isAuthenticated && (
+                <Link 
+                  href="/admin" 
+                  className="inline-block mt-2 text-[#F05A28] hover:text-[#d94a1e] transition text-xs"
+                >
+                  ⚙️ Admin Dashboard
+                </Link>
+              )}
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useQuoteStore } from '@/store/quoteStore';
+import { useAuth } from '@/lib/useAuth';
 import QuoteDrawer from './QuoteDrawer';
 
 export default function Header() {
@@ -10,6 +11,7 @@ export default function Header() {
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const totalItems = useQuoteStore((state) => state.getTotalItems());
+  const { isAuthenticated, loading } = useAuth();
 
   useEffect(() => {
     setMounted(true);
@@ -41,41 +43,69 @@ export default function Header() {
               ⬇ Download Catalogue (PDF)
             </Link>
 
-            <span className="text-gray-400">|</span>
-
-            {/* Hidden Admin Link - Only visible on hover */}
-            <div className="relative group">
-              <span className="text-gray-500 text-xs cursor-default">⚙️</span>
-              <div className="absolute right-0 top-full mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="bg-[#1A2B4C] border border-white/10 rounded-lg shadow-xl p-2 min-w-[140px]">
-                  <Link
-                    href="/admin/login"
-                    className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
-                  >
-                    🔐 Admin Login
-                  </Link>
-                  <Link
-                    href="/admin"
-                    className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
-                  >
-                    📊 Admin Dashboard
-                  </Link>
-                  <div className="border-t border-white/10 my-1"></div>
-                  <Link
-                    href="/catalogue"
-                    className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
-                  >
-                    📦 Catalogue
-                  </Link>
-                  <Link
-                    href="/request-quote"
-                    className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
-                  >
-                    📝 Request Quote
-                  </Link>
+            {/* Hidden Admin Link - Only visible when authenticated */}
+            {!loading && isAuthenticated && (
+              <>
+                <span className="text-gray-400">|</span>
+                <div className="relative group">
+                  <span className="text-gray-400 hover:text-[#F05A28] transition cursor-pointer text-sm">
+                    ⚙️ Admin
+                  </span>
+                  <div className="absolute right-0 top-full mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <div className="bg-[#1A2B4C] border border-white/10 rounded-lg shadow-xl p-2 min-w-[160px]">
+                      <Link
+                        href="/admin"
+                        className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
+                      >
+                        📊 Dashboard
+                      </Link>
+                      <Link
+                        href="/admin/login"
+                        className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
+                      >
+                        🔐 Admin Login
+                      </Link>
+                      <div className="border-t border-white/10 my-1"></div>
+                      <Link
+                        href="/catalogue"
+                        className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
+                      >
+                        📦 Catalogue
+                      </Link>
+                      <Link
+                        href="/request-quote"
+                        className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
+                      >
+                        📝 Request Quote
+                      </Link>
+                      <div className="border-t border-white/10 my-1"></div>
+                      <button
+                        onClick={async () => {
+                          await fetch('/api/auth/logout', { method: 'POST' });
+                          window.location.href = '/';
+                        }}
+                        className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-white/5 rounded transition"
+                      >
+                        🚪 Logout
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </>
+            )}
+
+            {/* Show Login link when not authenticated */}
+            {!loading && !isAuthenticated && (
+              <>
+                <span className="text-gray-400">|</span>
+                <Link
+                  href="/admin/login"
+                  className="text-sm text-gray-400 hover:text-[#F05A28] transition"
+                >
+                  🔐 Login
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -161,7 +191,25 @@ export default function Header() {
               <Link href="/about" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">About Us</Link>
               <Link href="/tender-support" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">Tender Support</Link>
               <Link href="/contact" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">Contact</Link>
-              <Link href="/admin" className="block text-[#F05A28] hover:text-[#d94a1e] transition font-medium">⚙️ Admin</Link>
+              <div className="border-t border-gray-200 my-2"></div>
+              {!loading && isAuthenticated ? (
+                <>
+                  <Link href="/admin" className="block text-[#F05A28] hover:text-[#d94a1e] transition font-medium">📊 Dashboard</Link>
+                  <button
+                    onClick={async () => {
+                      await fetch('/api/auth/logout', { method: 'POST' });
+                      window.location.href = '/';
+                    }}
+                    className="block w-full text-left text-red-500 hover:text-red-600 transition font-medium"
+                  >
+                    🚪 Logout
+                  </button>
+                </>
+              ) : (
+                <Link href="/admin/login" className="block text-[#F05A28] hover:text-[#d94a1e] transition font-medium">
+                  🔐 Admin Login
+                </Link>
+              )}
               <Link href="/request-quote" className="block rounded-lg bg-[#F05A28] px-4 py-3 text-center text-white hover:bg-[#d94a1e] transition font-semibold">
                 Request Quote
               </Link>
