@@ -1,30 +1,41 @@
-export default function TrustedBy() {
-  const clients = [
-    'Schools',
-    'Clinics',
-    'Municipalities',
-    'Government',
-    'Corporates',
-    'NGOs'
-  ];
+import { School, Stethoscope, Landmark, Building, Users2, Heart } from 'lucide-react';
+import Container from './Container';
+import SectionTitle from './SectionTitle';
 
+const clients = [
+  { name: 'Schools', icon: School },
+  { name: 'Clinics', icon: Stethoscope },
+  { name: 'Municipalities', icon: Landmark },
+  { name: 'Government', icon: Building },
+  { name: 'Corporates', icon: Users2 },
+  { name: 'NGOs', icon: Heart },
+];
+
+export default function TrustedBy() {
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
-        <p className="text-center text-gray-600 text-sm uppercase tracking-wider mb-8">
-          Trusted by organisations across South Africa
-        </p>
-        <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-          {clients.map((client) => (
-            <span
-              key={client}
-              className="text-lg font-medium text-[#1A2B4C]/60 hover:text-[#1A2B4C] transition"
-            >
-              {client}
-            </span>
-          ))}
+    <section className="py-20 bg-white">
+      <Container>
+        <SectionTitle 
+          title="Trusted by Organisations" 
+          subtitle="Across South Africa"
+        />
+        
+        <div className="mt-12 flex flex-wrap justify-center items-center gap-12 md:gap-16">
+          {clients.map((client) => {
+            const Icon = client.icon;
+            return (
+              <div key={client.name} className="flex flex-col items-center gap-2 group">
+                <div className="w-16 h-16 rounded-xl bg-gray-50 flex items-center justify-center group-hover:bg-[#F05A28]/10 transition-colors">
+                  <Icon className="w-8 h-8 text-gray-400 group-hover:text-[#F05A28] transition-colors" />
+                </div>
+                <span className="text-sm font-medium text-gray-600 group-hover:text-[#1A2B4C] transition-colors">
+                  {client.name}
+                </span>
+              </div>
+            );
+          })}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
