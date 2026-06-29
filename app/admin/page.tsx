@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { Plus, Edit, Trash2, Search, X, LogOut } from 'lucide-react';
 
 interface Product {
@@ -27,7 +27,29 @@ export default function AdminPage() {
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
   const router = useRouter();
+
+  // Check authentication
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('/api/auth/verify');
+        const data = await res.json();
+        if (!data.authenticated) {
+          router.push('/admin/login');
+          return;
+        }
+        setIsAuthenticated(true);
+      } catch (error) {
+        router.push('/admin/login');
+      } finally {
+        setAuthLoading(false);
+      }
+    };
+    checkAuth();
+  }, [router]);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -44,8 +66,10 @@ export default function AdminPage() {
   });
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    if (isAuthenticated) {
+      fetchProducts();
+    }
+  }, [isAuthenticated]);
 
   const fetchProducts = async () => {
     try {
@@ -75,10 +99,7 @@ export default function AdminPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Create FormData object
     const formDataObj = new FormData();
-    
-    // Append all fields
     formDataObj.append('name', formData.name);
     formDataObj.append('category', formData.category);
     formDataObj.append('description', formData.description);
@@ -89,7 +110,6 @@ export default function AdminPage() {
     formDataObj.append('stock', formData.stock);
     formDataObj.append('featured', String(formData.featured));
     
-    // Append image if selected
     if (formData.image) {
       formDataObj.append('image', formData.image);
     }
@@ -97,8 +117,6 @@ export default function AdminPage() {
     try {
       const url = editingProduct ? `/api/products/${editingProduct.id}` : '/api/products';
       const method = editingProduct ? 'PUT' : 'POST';
-      
-      console.log(`${method} request to:`, url);
       
       const res = await fetch(url, {
         method,
@@ -108,12 +126,10 @@ export default function AdminPage() {
       const result = await res.json();
       
       if (res.ok) {
-        console.log('Save successful:', result);
         await fetchProducts();
         setShowModal(false);
         resetForm();
       } else {
-        console.error('Save error:', result);
         alert('Error saving product: ' + (result.error || 'Unknown error'));
       }
     } catch (error) {
@@ -139,7 +155,6 @@ export default function AdminPage() {
   };
 
   const handleEdit = (product: Product) => {
-    console.log('Editing product:', product);
     setEditingProduct(product);
     setFormData({
       name: product.name,
@@ -177,6 +192,20 @@ export default function AdminPage() {
     p.sku.toLowerCase().includes(search.toLowerCase()) ||
     p.category.toLowerCase().includes(search.toLowerCase())
   );
+
+  // Show loading while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-2xl">Checking authentication...</div>
+      </div>
+    );
+  }
+
+  // If not authenticated, don't render (will redirect)
+  if (!isAuthenticated) {
+    return null;
+  }
 
   if (loading) {
     return (
