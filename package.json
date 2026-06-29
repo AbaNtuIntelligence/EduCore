@@ -7,9 +7,9 @@
     "lib": "lib"
   },
   "scripts": {
-    "dev": "next dev -p 3000",
+    "dev": "next dev -p 3000 -H 0.0.0.0 --webpack",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p ",
     "lint": "next lint"
   },
   "keywords": [],
@@ -32,6 +32,7 @@
     "zustand": "^5.0.14"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.15.12",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^26.0.1",

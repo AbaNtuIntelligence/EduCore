@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Building2, Truck, Shield } from 'lucide-react';
 
 export default function FeaturedBanner() {
   return (
@@ -8,7 +7,7 @@ export default function FeaturedBanner() {
         <div className="grid gap-8 md:grid-cols-3">
           <div className="text-center text-white">
             <div className="inline-flex items-center justify-center rounded-full bg-[#F05A28]/20 p-4 mb-4">
-              <Building2 className="h-8 w-8 text-[#F05A28]" />
+              <span className="text-3xl">🏢</span>
             </div>
             <h3 className="text-xl font-semibold">Tender Ready</h3>
             <p className="text-gray-300 text-sm mt-2">
@@ -17,7 +16,7 @@ export default function FeaturedBanner() {
           </div>
           <div className="text-center text-white">
             <div className="inline-flex items-center justify-center rounded-full bg-[#F05A28]/20 p-4 mb-4">
-              <Truck className="h-8 w-8 text-[#F05A28]" />
+              <span className="text-3xl">🚚</span>
             </div>
             <h3 className="text-xl font-semibold">Nationwide Delivery</h3>
             <p className="text-gray-300 text-sm mt-2">
@@ -26,7 +25,7 @@ export default function FeaturedBanner() {
           </div>
           <div className="text-center text-white">
             <div className="inline-flex items-center justify-center rounded-full bg-[#F05A28]/20 p-4 mb-4">
-              <Shield className="h-8 w-8 text-[#F05A28]" />
+              <span className="text-3xl">🛡️</span>
             </div>
             <h3 className="text-xl font-semibold">Quality Guaranteed</h3>
             <p className="text-gray-300 text-sm mt-2">
