@@ -14,7 +14,7 @@
       ],
       "price": "R 285.00",
       "unit": "per box",
-      "image": "/images/products/copy-paper.jpg",
+      "image": "https://i.imgur.com/I136Dqf.png",
       "sku": "EDU-PAP-001",
       "featured": true,
       "stock": "In Stock"
@@ -33,7 +33,7 @@
       ],
       "price": "R 4,250.00",
       "unit": "per unit",
-      "image": "/images/products/executive-desk.jpg",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Executive+Desk",
       "sku": "EDU-FUR-012",
       "featured": true,
       "stock": "In Stock"
@@ -52,7 +52,7 @@
       ],
       "price": "R 125.00",
       "unit": "per box",
-      "image": "/images/products/face-masks.jpg",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Face+Masks",
       "sku": "EDU-PPE-003",
       "featured": true,
       "stock": "In Stock"
@@ -71,7 +71,7 @@
       ],
       "price": "R 185.00",
       "unit": "per 5L",
-      "image": "/images/products/cleaning-chemicals.jpg",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Cleaning+Chemical",
       "sku": "EDU-CLN-005",
       "featured": false,
       "stock": "In Stock"
@@ -90,7 +90,7 @@
       ],
       "price": "R 95.00",
       "unit": "per box of 50",
-      "image": "/images/products/gel-pens.jpg",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Gel+Pens",
       "sku": "EDU-PEN-023",
       "featured": false,
       "stock": "In Stock"
@@ -109,7 +109,7 @@
       ],
       "price": "R 3,850.00",
       "unit": "per unit",
-      "image": "/images/products/office-chair.jpg",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Office+Chair",
       "sku": "EDU-FUR-035",
       "featured": false,
       "stock": "In Stock"
@@ -128,7 +128,7 @@
       ],
       "price": "R 165.00",
       "unit": "per 5L",
-      "image": "/images/products/sanitiser.jpg",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Sanitiser",
       "sku": "EDU-HYG-008",
       "featured": false,
       "stock": "In Stock"
@@ -147,7 +147,7 @@
       ],
       "price": "R 225.00",
       "unit": "per unit",
-      "image": "/images/products/safety-overalls.jpg",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Safety+Overalls",
       "sku": "EDU-PPE-067",
       "featured": false,
       "stock": "In Stock"
@@ -166,7 +166,7 @@
       ],
       "price": "R 2,650.00",
       "unit": "per unit",
-      "image": "/images/products/filing-cabinet.jpg",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Filing+Cabinet",
       "sku": "EDU-FUR-089",
       "featured": false,
       "stock": "In Stock"
@@ -185,7 +185,7 @@
       ],
       "price": "R 75.00",
       "unit": "per box of 100",
-      "image": "/images/products/disposable-gloves.jpg",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Disposable+Gloves",
       "sku": "EDU-PPE-042",
       "featured": false,
       "stock": "In Stock"
@@ -204,7 +204,7 @@
       ],
       "price": "R 45.00",
       "unit": "per pack of 10",
-      "image": "/images/products/spiral-notebook.jpg",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Spiral+Notebook",
       "sku": "EDU-NTB-016",
       "featured": false,
       "stock": "In Stock"
@@ -223,22 +223,24 @@
       ],
       "price": "R 145.00",
       "unit": "per pack of 48",
-      "image": "/images/products/toilet-paper.jpg",
+      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Toilet+Paper",
       "sku": "EDU-HYG-092",
       "featured": false,
       "stock": "In Stock"
     },
     {
       "id": 13,
-      "name": "Cape Town",
-      "slug": "cape-town",
-      "category": "furniture",
-      "description": "Table Mountain",
-      "features": [],
-      "price": "10 000 00",
+      "name": "John Pama",
+      "slug": "john-pama",
+      "category": "stationery",
+      "description": "Staionery",
+      "features": [
+        "Desks"
+      ],
+      "price": "2000 00",
       "unit": "1x1",
-      "image": "/images/products/1782766463085-p008zn.jfif",
-      "sku": "c-p",
+      "image": "https://i.imgur.com/4olqYUc.png[/img]",
+      "sku": "j-p",
       "featured": true,
       "stock": "In Stock"
     }
@@ -252,12 +254,12 @@
     {
       "id": "stationery",
       "name": "Stationery",
-      "count": 3
+      "count": 4
     },
     {
       "id": "furniture",
       "name": "Office Furniture",
-      "count": 4
+      "count": 3
     },
     {
       "id": "ppe",

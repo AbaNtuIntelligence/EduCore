@@ -27,29 +27,7 @@ export default function AdminPage() {
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [authLoading, setAuthLoading] = useState(true);
   const router = useRouter();
-
-  // Check authentication
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await fetch('/api/auth/verify');
-        const data = await res.json();
-        if (!data.authenticated) {
-          router.push('/admin/login');
-          return;
-        }
-        setIsAuthenticated(true);
-      } catch (error) {
-        router.push('/admin/login');
-      } finally {
-        setAuthLoading(false);
-      }
-    };
-    checkAuth();
-  }, [router]);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -62,14 +40,12 @@ export default function AdminPage() {
     sku: '',
     stock: 'In Stock',
     featured: false,
-    image: null as File | null,
+    imageUrl: '', // Changed from 'image' to 'imageUrl'
   });
 
   useEffect(() => {
-    if (isAuthenticated) {
-      fetchProducts();
-    }
-  }, [isAuthenticated]);
+    fetchProducts();
+  }, []);
 
   const fetchProducts = async () => {
     try {
@@ -99,7 +75,10 @@ export default function AdminPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Create FormData object
     const formDataObj = new FormData();
+    
+    // Append all fields
     formDataObj.append('name', formData.name);
     formDataObj.append('category', formData.category);
     formDataObj.append('description', formData.description);
@@ -109,14 +88,13 @@ export default function AdminPage() {
     formDataObj.append('sku', formData.sku);
     formDataObj.append('stock', formData.stock);
     formDataObj.append('featured', String(formData.featured));
-    
-    if (formData.image) {
-      formDataObj.append('image', formData.image);
-    }
+    formDataObj.append('imageUrl', formData.imageUrl); // Send image URL instead of file
 
     try {
       const url = editingProduct ? `/api/products/${editingProduct.id}` : '/api/products';
       const method = editingProduct ? 'PUT' : 'POST';
+      
+      console.log(`${method} request to:`, url);
       
       const res = await fetch(url, {
         method,
@@ -126,10 +104,12 @@ export default function AdminPage() {
       const result = await res.json();
       
       if (res.ok) {
+        console.log('Save successful:', result);
         await fetchProducts();
         setShowModal(false);
         resetForm();
       } else {
+        console.error('Save error:', result);
         alert('Error saving product: ' + (result.error || 'Unknown error'));
       }
     } catch (error) {
@@ -155,6 +135,7 @@ export default function AdminPage() {
   };
 
   const handleEdit = (product: Product) => {
+    console.log('Editing product:', product);
     setEditingProduct(product);
     setFormData({
       name: product.name,
@@ -166,7 +147,7 @@ export default function AdminPage() {
       sku: product.sku,
       stock: product.stock || 'In Stock',
       featured: product.featured,
-      image: null,
+      imageUrl: product.image || '', // Changed to imageUrl
     });
     setShowModal(true);
   };
@@ -183,7 +164,7 @@ export default function AdminPage() {
       sku: '',
       stock: 'In Stock',
       featured: false,
-      image: null,
+      imageUrl: '',
     });
   };
 
@@ -192,20 +173,6 @@ export default function AdminPage() {
     p.sku.toLowerCase().includes(search.toLowerCase()) ||
     p.category.toLowerCase().includes(search.toLowerCase())
   );
-
-  // Show loading while checking auth
-  if (authLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-2xl">Checking authentication...</div>
-      </div>
-    );
-  }
-
-  // If not authenticated, don't render (will redirect)
-  if (!isAuthenticated) {
-    return null;
-  }
 
   if (loading) {
     return (
@@ -284,7 +251,7 @@ export default function AdminPage() {
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-                            {product.image && product.image !== '/images/products/default-product.jpg' ? (
+                            {product.image && product.image.startsWith('http') ? (
                               <img
                                 src={product.image}
                                 alt={product.name}
@@ -365,16 +332,35 @@ export default function AdminPage() {
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              {/* Product Image */}
+              {/* Image URL - New field */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Product Image</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Image URL
+                </label>
                 <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setFormData({ ...formData, image: e.target.files?.[0] || null })}
+                  type="url"
+                  placeholder="https://i.imgur.com/XXXXXXX.png"
+                  value={formData.imageUrl}
+                  onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                   className="w-full border border-gray-300 rounded-lg p-2 focus:border-[#F05A28] focus:outline-none"
                 />
-                {editingProduct?.image && !formData.image && (
+                <p className="text-xs text-gray-500 mt-1">
+                  Paste a direct image URL from Imgur, Cloudinary, or any image hosting service.
+                </p>
+                {formData.imageUrl && (
+                  <div className="mt-2">
+                    <img 
+                      src={formData.imageUrl} 
+                      alt="Preview" 
+                      className="w-20 h-20 object-cover rounded-lg border border-gray-200"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://placehold.co/80x80/1A2B4C/FFFFFF?text=Invalid+URL';
+                      }}
+                    />
+                    <p className="text-xs text-gray-400 mt-1">Preview</p>
+                  </div>
+                )}
+                {editingProduct?.image && !formData.imageUrl && (
                   <div className="mt-2">
                     <p className="text-xs text-gray-500">Current image:</p>
                     <img 

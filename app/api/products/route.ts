@@ -47,6 +47,7 @@ export async function POST(request: Request) {
     const stock = formData.get('stock') as string;
     const featured = formData.get('featured') === 'true';
     const features = (formData.get('features') as string)?.split('\n').filter(f => f.trim()) || [];
+    const imageUrl = formData.get('imageUrl') as string || 'https://placehold.co/400x400/1A2B4C/FFFFFF?text=No+Image';
     
     // Create slug
     const slug = name
@@ -60,30 +61,6 @@ export async function POST(request: Request) {
     // Create new product
     const newId = data.products.length > 0 ? Math.max(...data.products.map((p: any) => p.id)) + 1 : 1;
     
-    // Handle image upload
-    const imageFile = formData.get('image') as File | null;
-    let imagePath = '/images/products/default-product.jpg';
-    
-    if (imageFile && imageFile.size > 0) {
-      const bytes = await imageFile.arrayBuffer();
-      const buffer = Buffer.from(bytes);
-      
-      const timestamp = Date.now();
-      const ext = imageFile.name.split('.').pop();
-      const filename = `${timestamp}-${Math.random().toString(36).substring(7)}.${ext}`;
-      const relativePath = `/images/products/${filename}`;
-      const fullPath = path.join(process.cwd(), 'public', relativePath);
-      
-      // Ensure directory exists
-      const dir = path.dirname(fullPath);
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-      }
-      
-      fs.writeFileSync(fullPath, buffer);
-      imagePath = relativePath;
-    }
-    
     const newProduct = {
       id: newId,
       name,
@@ -93,7 +70,7 @@ export async function POST(request: Request) {
       features,
       price,
       unit,
-      image: imagePath,
+      image: imageUrl,
       sku,
       featured,
       stock: stock || 'In Stock',
