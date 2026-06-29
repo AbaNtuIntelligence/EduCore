@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
 import { Plus, Edit, Trash2, Search, X, LogOut } from 'lucide-react';
 
 interface Product {
@@ -29,7 +27,6 @@ export default function AdminPage() {
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const router = useRouter();
 
-  // Form state
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -40,7 +37,7 @@ export default function AdminPage() {
     sku: '',
     stock: 'In Stock',
     featured: false,
-    imageUrl: '', // Changed from 'image' to 'imageUrl'
+    imageUrl: '',
   });
 
   useEffect(() => {
@@ -75,10 +72,7 @@ export default function AdminPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Create FormData object
     const formDataObj = new FormData();
-    
-    // Append all fields
     formDataObj.append('name', formData.name);
     formDataObj.append('category', formData.category);
     formDataObj.append('description', formData.description);
@@ -88,20 +82,39 @@ export default function AdminPage() {
     formDataObj.append('sku', formData.sku);
     formDataObj.append('stock', formData.stock);
     formDataObj.append('featured', String(formData.featured));
-    formDataObj.append('imageUrl', formData.imageUrl); // Send image URL instead of file
-
+    formDataObj.append('imageUrl', formData.imageUrl);
+    
+    // Always use /api/products with PUT method
+    const url = '/api/products';
+    const method = 'PUT';
+    
+    // If editing, add the ID to the form data
+    if (editingProduct) {
+      formDataObj.append('id', String(editingProduct.id));
+    }
+    
+    console.log('Sending request to:', url);
+    console.log('Method:', method);
+    console.log('Product ID:', editingProduct?.id || 'New');
+    
     try {
-      const url = editingProduct ? `/api/products/${editingProduct.id}` : '/api/products';
-      const method = editingProduct ? 'PUT' : 'POST';
-      
-      console.log(`${method} request to:`, url);
-      
       const res = await fetch(url, {
         method,
         body: formDataObj,
       });
       
-      const result = await res.json();
+      const responseText = await res.text();
+      console.log('Response status:', res.status);
+      console.log('Raw response:', responseText);
+      
+      let result;
+      try {
+        result = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('Failed to parse JSON:', parseError);
+        alert('Server error: ' + responseText.substring(0, 200));
+        return;
+      }
       
       if (res.ok) {
         console.log('Save successful:', result);
@@ -110,11 +123,11 @@ export default function AdminPage() {
         resetForm();
       } else {
         console.error('Save error:', result);
-        alert('Error saving product: ' + (result.error || 'Unknown error'));
+        alert('Error saving product: ' + (result.error || result.message || 'Unknown error'));
       }
     } catch (error) {
-      console.error('Error saving product:', error);
-      alert('Error saving product. Please check console for details.');
+      console.error('Fetch error:', error);
+      alert('Network error: ' + (error as Error).message);
     }
   };
 
@@ -122,7 +135,7 @@ export default function AdminPage() {
     if (!confirm('Are you sure you want to delete this product?')) return;
     
     try {
-      const res = await fetch(`/api/products/${id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/products?id=${id}`, { method: 'DELETE' });
       if (res.ok) {
         await fetchProducts();
       } else {
@@ -147,7 +160,7 @@ export default function AdminPage() {
       sku: product.sku,
       stock: product.stock || 'In Stock',
       featured: product.featured,
-      imageUrl: product.image || '', // Changed to imageUrl
+      imageUrl: product.image || '',
     });
     setShowModal(true);
   };
@@ -185,7 +198,6 @@ export default function AdminPage() {
   return (
     <div className="bg-gray-50 min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-[#1A2B4C]">Product Management</h1>
@@ -210,7 +222,6 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* Search */}
         <div className="bg-white rounded-xl shadow-sm p-4 mb-8">
           <div className="relative max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -224,7 +235,6 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* Products Table */}
         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -315,7 +325,6 @@ export default function AdminPage() {
         </div>
       </div>
 
-      {/* Add/Edit Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -332,7 +341,6 @@ export default function AdminPage() {
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              {/* Image URL - New field */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Image URL
@@ -344,9 +352,6 @@ export default function AdminPage() {
                   onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                   className="w-full border border-gray-300 rounded-lg p-2 focus:border-[#F05A28] focus:outline-none"
                 />
-                <p className="text-xs text-gray-500 mt-1">
-                  Paste a direct image URL from Imgur, Cloudinary, or any image hosting service.
-                </p>
                 {formData.imageUrl && (
                   <div className="mt-2">
                     <img 
@@ -357,25 +362,10 @@ export default function AdminPage() {
                         (e.target as HTMLImageElement).src = 'https://placehold.co/80x80/1A2B4C/FFFFFF?text=Invalid+URL';
                       }}
                     />
-                    <p className="text-xs text-gray-400 mt-1">Preview</p>
-                  </div>
-                )}
-                {editingProduct?.image && !formData.imageUrl && (
-                  <div className="mt-2">
-                    <p className="text-xs text-gray-500">Current image:</p>
-                    <img 
-                      src={editingProduct.image} 
-                      alt="Current product" 
-                      className="w-20 h-20 object-cover rounded-lg mt-1"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = 'https://placehold.co/80x80/1A2B4C/FFFFFF?text=📦';
-                      }}
-                    />
                   </div>
                 )}
               </div>
 
-              {/* Product Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Product Name *</label>
                 <input
@@ -387,7 +377,6 @@ export default function AdminPage() {
                 />
               </div>
 
-              {/* Category */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Category *</label>
                 <select
@@ -404,7 +393,6 @@ export default function AdminPage() {
                 </select>
               </div>
 
-              {/* Description */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Description *</label>
                 <textarea
@@ -416,7 +404,6 @@ export default function AdminPage() {
                 />
               </div>
 
-              {/* Features */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Features (one per line)</label>
                 <textarea
@@ -427,7 +414,6 @@ export default function AdminPage() {
                 />
               </div>
 
-              {/* Price & Unit */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Price *</label>
@@ -453,7 +439,6 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              {/* SKU & Stock */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">SKU *</label>
@@ -480,7 +465,6 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              {/* Featured */}
               <div className="flex items-center gap-2">
                 <input
                   type="checkbox"
@@ -491,7 +475,6 @@ export default function AdminPage() {
                 <label className="text-sm font-medium text-gray-700">Featured Product</label>
               </div>
 
-              {/* Submit */}
               <div className="flex gap-3 pt-4 border-t">
                 <button
                   type="submit"

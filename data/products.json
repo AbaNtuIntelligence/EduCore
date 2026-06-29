@@ -22,13 +22,13 @@
     {
       "id": 2,
       "name": "Executive Office Desk - 1800mm",
-      "slug": "executive-office-desk",
+      "slug": "executive-office-desk-1800mm",
       "category": "furniture",
       "description": "Modern executive desk with sleek finish and built-in cable management. Spacious work surface for maximum productivity.",
       "features": [
-        "1800mm x 900mm x 750mm",
-        "High-density MDF",
-        "Built-in cable management",
+        "1800mm x 900mm x 750mm\r",
+        "High-density MDF\r",
+        "Built-in cable management\r",
         "5 colour options available"
       ],
       "price": "R 4,250.00",
@@ -41,18 +41,18 @@
     {
       "id": 3,
       "name": "3-Ply Disposable Face Masks - Box of 50",
-      "slug": "3-ply-disposable-face-masks",
+      "slug": "3-ply-disposable-face-masks-box-of-50",
       "category": "ppe",
       "description": "High-quality disposable 3-ply face masks with elastic ear loops. Provides reliable protection against droplets and airborne particles.",
       "features": [
-        "3-ply protection",
-        "Elastic ear loops",
-        "Breathable material",
+        "3-ply protection\r",
+        "Elastic ear loops\r",
+        "Breathable material\r",
         "CE certified"
       ],
       "price": "R 125.00",
       "unit": "per box",
-      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Face+Masks",
+      "image": "https://i.imgur.com/3RA7yEI.png",
       "sku": "EDU-PPE-003",
       "featured": true,
       "stock": "In Stock"
@@ -60,18 +60,18 @@
     {
       "id": 4,
       "name": "Industrial Cleaning Chemical - 5L",
-      "slug": "industrial-cleaning-chemical",
+      "slug": "industrial-cleaning-chemical-5l",
       "category": "cleaning",
       "description": "Multi-purpose industrial cleaning chemical effective on all hard surfaces. Concentrated formula for maximum value.",
       "features": [
-        "Kills 99.9% of bacteria",
-        "Concentrated formula",
-        "Available in multiple fragrances",
+        "Kills 99.9% of bacteria\r",
+        "Concentrated formula\r",
+        "Available in multiple fragrances\r",
         "5L container"
       ],
       "price": "R 185.00",
       "unit": "per 5L",
-      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Cleaning+Chemical",
+      "image": "https://i.imgur.com/OBFFr7D.jpeg",
       "sku": "EDU-CLN-005",
       "featured": false,
       "stock": "In Stock"
@@ -117,20 +117,20 @@
     {
       "id": 7,
       "name": "Hygiene Hand Sanitiser - 5L",
-      "slug": "hand-sanitiser-5l",
+      "slug": "hygiene-hand-sanitiser-5l",
       "category": "cleaning",
       "description": "High-strength alcohol-based hand sanitiser with moisturising agents. Kills 99.9% of germs and bacteria.",
       "features": [
-        "70% alcohol",
-        "Moisturising formula",
-        "Available in 5L and 25L",
+        "70% alcohol\r",
+        "Moisturising formula\r",
+        "Available in 5L and 25L\r",
         "Safe for frequent use"
       ],
       "price": "R 165.00",
       "unit": "per 5L",
-      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Sanitiser",
+      "image": "https://i.imgur.com/rvmz0cR.png",
       "sku": "EDU-HYG-008",
-      "featured": false,
+      "featured": true,
       "stock": "In Stock"
     },
     {
@@ -174,20 +174,20 @@
     {
       "id": 10,
       "name": "Disposable Gloves - Box of 100",
-      "slug": "disposable-gloves-box-100",
+      "slug": "disposable-gloves-box-of-100",
       "category": "ppe",
       "description": "Powder-free disposable gloves for hygiene and safety. Latex-free and suitable for all general applications.",
       "features": [
-        "Powder-free",
-        "Latex-free",
-        "Available in multiple sizes",
+        "Powder-free\r",
+        "Latex-free\r",
+        "Available in multiple sizes\r",
         "Box of 100"
       ],
       "price": "R 75.00",
       "unit": "per box of 100",
-      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Disposable+Gloves",
+      "image": "https://i.imgur.com/Lhv0lFh.png",
       "sku": "EDU-PPE-042",
-      "featured": false,
+      "featured": true,
       "stock": "In Stock"
     },
     {
@@ -216,16 +216,16 @@
       "category": "cleaning",
       "description": "Premium 3-ply toilet paper in a convenient bulk pack. Soft, strong, and hygienic for business and institutional use.",
       "features": [
-        "3-ply softness",
-        "Bulk pack of 48 rolls",
-        "Individually wrapped",
+        "3-ply softness\r",
+        "Bulk pack of 48 rolls\r",
+        "Individually wrapped\r",
         "Septic safe"
       ],
       "price": "R 145.00",
       "unit": "per pack of 48",
-      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Toilet+Paper",
+      "image": "https://i.imgur.com/iekMqof.png",
       "sku": "EDU-HYG-092",
-      "featured": false,
+      "featured": true,
       "stock": "In Stock"
     },
     {
@@ -239,7 +239,7 @@
       ],
       "price": "2000 00",
       "unit": "1x1",
-      "image": "https://i.imgur.com/4olqYUc.png[/img]",
+      "image": "https://i.imgur.com/4olqYUc.png",
       "sku": "j-p",
       "featured": true,
       "stock": "In Stock"
