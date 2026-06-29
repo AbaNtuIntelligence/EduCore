@@ -2,42 +2,35 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { PenTool, Sofa, HardHat, Sparkles, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Container from './Container';
 import SectionTitle from './SectionTitle';
 
+// ✅ REPLACE THESE URLs with your actual category images
 const categories = [
   { 
     id: 'stationery', 
     name: 'Stationery', 
-    icon: PenTool, 
-    description: 'Pens, paper, files & more',
-    color: 'from-blue-50 to-blue-100',
-    iconColor: 'text-blue-600'
+    image: 'https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=600&h=400&fit=crop&q=80',
+    description: 'Pens, paper, files & more'
   },
   { 
     id: 'furniture', 
     name: 'Office Furniture', 
-    icon: Sofa, 
-    description: 'Desks, chairs, cabinets',
-    color: 'from-orange-50 to-orange-100',
-    iconColor: 'text-orange-600'
+    image: 'https://images.unsplash.com/photo-1584473457406-6240486418e9?w=600&h=400&fit=crop&q=80',
+    description: 'Desks, chairs, cabinets'
   },
   { 
     id: 'ppe', 
     name: 'PPE & Safety', 
-    icon: HardHat, 
-    description: 'Masks, gloves, overalls',
-    color: 'from-green-50 to-green-100',
-    iconColor: 'text-green-600'
+    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&h=400&fit=crop&q=80',
+    description: 'Masks, gloves, overalls'
   },
   { 
     id: 'cleaning', 
     name: 'Cleaning & Hygiene', 
-    icon: Sparkles, 
-    description: 'Chemicals, disinfectants',
-    color: 'from-purple-50 to-purple-100',
-    iconColor: 'text-purple-600'
+    image: 'https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=600&h=400&fit=crop&q=80',
+    description: 'Chemicals, disinfectants'
   },
 ];
 
@@ -51,38 +44,41 @@ export default function CategoryGrid() {
         />
         
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {categories.map((category, index) => {
-            const Icon = category.icon;
-            return (
-              <motion.div
-                key={category.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
+          {categories.map((category, index) => (
+            <motion.div
+              key={category.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+            >
+              <Link
+                href={`/catalogue?category=${category.id}`}
+                className="block group overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100"
               >
-                <Link
-                  href={`/catalogue?category=${category.id}`}
-                  className={`block bg-gradient-to-br ${category.color} rounded-xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:border-[#F05A28] relative overflow-hidden`}
-                >
-                  <div className="relative z-10">
-                    <div className={`w-16 h-16 rounded-xl bg-white/50 backdrop-blur-sm flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110`}>
-                      <Icon className={`w-8 h-8 ${category.iconColor}`} />
-                    </div>
-                    <h3 className="text-xl font-bold text-[#1A2B4C] group-hover:text-[#F05A28] transition">
-                      {category.name}
-                    </h3>
-                    <p className="text-gray-600 text-sm mt-2">{category.description}</p>
-                    <div className="mt-4 flex items-center gap-1 text-[#F05A28] font-medium text-sm group-hover:gap-2 transition-all">
-                      Explore <ArrowRight className="w-4 h-4" />
-                    </div>
+                <div className="aspect-[4/3] bg-gray-200 relative overflow-hidden">
+                  <img
+                    src={category.image}
+                    alt={category.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = `https://placehold.co/600x400/1A2B4C/FFFFFF?text=${category.name}`;
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-[#1A2B4C] group-hover:text-[#F05A28] transition">
+                    {category.name}
+                  </h3>
+                  <p className="text-gray-600 text-sm mt-2">{category.description}</p>
+                  <div className="mt-4 flex items-center gap-1 text-[#F05A28] font-medium text-sm group-hover:gap-2 transition-all">
+                    Explore <ArrowRight className="w-4 h-4" />
                   </div>
-                  {/* Decorative circle */}
-                  <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-[#F05A28]/5 group-hover:bg-[#F05A28]/10 transition-all"></div>
-                </Link>
-              </motion.div>
-            );
-          })}
+                </div>
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </Container>
     </section>
