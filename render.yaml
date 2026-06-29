@@ -9,20 +9,8 @@ services:
       - key: NODE_ENV
         value: production
       - key: ADMIN_USERNAME
-        sync: false
+        value: admin
       - key: ADMIN_PASSWORD
-        sync: false
+        value: educore2026
       - key: JWT_SECRET
-        sync: false
-      - key: SMTP_HOST
-        sync: false
-      - key: SMTP_PORT
-        sync: false
-      - key: SMTP_USER
-        sync: false
-      - key: SMTP_PASSWORD
-        sync: false
-      - key: SMTP_FROM
-        sync: false
-      - key: QUOTE_RECIPIENT
-        sync: false
+        value: my-super-secret-key-2026-xyz-123
