@@ -8,8 +8,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'EDUCORE - Premium Stationery, PPE & Hygiene Supplies',
-  description: 'Your trusted partner for stationery, office furniture, PPE, and hygiene solutions across South Africa. Tender ready and B-BBEE compliant.',
-  keywords: 'stationery, PPE, hygiene supplies, office furniture, school supplies, cleaning materials, South Africa',
+  description: 'Your trusted partner for stationery, office furniture, PPE, and hygiene solutions across South Africa.',
 };
 
 export default function RootLayout({
