@@ -5,6 +5,7 @@ export default function Footer() {
     <footer className="bg-[#1A2B4C] text-white border-t border-white/10">
       <div className="container mx-auto px-4 py-12">
         <div className="grid gap-8 md:grid-cols-4">
+          {/* Column 1: Company */}
           <div>
             <h3 className="text-2xl font-bold mb-4 tracking-tight">EDUCORE</h3>
             <p className="text-sm text-gray-300 leading-relaxed">
@@ -25,6 +26,7 @@ export default function Footer() {
             </p>
           </div>
 
+          {/* Column 2: Quick Links */}
           <div>
             <h4 className="mb-4 text-lg font-semibold text-white">Quick Links</h4>
             <ul className="space-y-2 text-sm">
@@ -37,6 +39,7 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Column 3: Download Catalogue */}
           <div>
             <h4 className="mb-4 text-lg font-semibold text-white">Resources</h4>
             <Link
@@ -55,6 +58,7 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Column 4: Social & Legal */}
           <div>
             <h4 className="mb-4 text-lg font-semibold text-white">Connect With Us</h4>
             <div className="flex space-x-3">
@@ -74,6 +78,13 @@ export default function Footer() {
             <div className="mt-6 border-t border-white/10 pt-4 text-xs text-gray-400">
               <p>&copy; 2026 EDUCORE STATIONERY AND HYGIENE SUPPLIES (PTY) LTD</p>
               <p className="mt-1">All rights reserved.</p>
+              {/* Hidden Admin Link in Footer - Very subtle */}
+              <Link 
+                href="/admin" 
+                className="text-[#1A2B4C] hover:text-[#F05A28] transition text-[8px] tracking-widest uppercase opacity-20 hover:opacity-100"
+              >
+                Admin
+              </Link>
             </div>
           </div>
         </div>

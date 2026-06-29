@@ -22,13 +22,17 @@ export default function Header() {
         <div className="container mx-auto flex items-center justify-between px-4 py-2">
           <span className="text-sm">Your Trusted Partner for Stationery, PPE & Hygiene Solutions</span>
           <div className="flex items-center space-x-4">
+            {/* Social Icons */}
             <div className="flex items-center space-x-3">
               <a href="#" className="text-sm hover:text-[#F05A28] transition font-bold">f</a>
               <a href="#" className="text-sm hover:text-[#F05A28] transition font-bold">in</a>
               <a href="#" className="text-sm hover:text-[#F05A28] transition font-bold">ig</a>
               <a href="#" className="text-sm hover:text-[#F05A28] transition font-bold">yt</a>
             </div>
+            
             <span className="text-gray-400">|</span>
+            
+            {/* Download Catalogue Button */}
             <Link
               href="/pdf-catalogue"
               target="_blank"
@@ -36,6 +40,42 @@ export default function Header() {
             >
               ⬇ Download Catalogue (PDF)
             </Link>
+
+            <span className="text-gray-400">|</span>
+
+            {/* Hidden Admin Link - Only visible on hover */}
+            <div className="relative group">
+              <span className="text-gray-500 text-xs cursor-default">⚙️</span>
+              <div className="absolute right-0 top-full mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="bg-[#1A2B4C] border border-white/10 rounded-lg shadow-xl p-2 min-w-[140px]">
+                  <Link
+                    href="/admin/login"
+                    className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
+                  >
+                    🔐 Admin Login
+                  </Link>
+                  <Link
+                    href="/admin"
+                    className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
+                  >
+                    📊 Admin Dashboard
+                  </Link>
+                  <div className="border-t border-white/10 my-1"></div>
+                  <Link
+                    href="/catalogue"
+                    className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
+                  >
+                    📦 Catalogue
+                  </Link>
+                  <Link
+                    href="/request-quote"
+                    className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition"
+                  >
+                    📝 Request Quote
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -43,6 +83,7 @@ export default function Header() {
       {/* Main Navigation */}
       <header className="sticky top-0 z-50 bg-white shadow-md">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
+          {/* Logo */}
           <Link href="/" className="flex items-center">
             <div className="text-2xl font-bold text-[#1A2B4C] tracking-tight">
               EDUCORE
@@ -52,6 +93,7 @@ export default function Header() {
             </div>
           </Link>
 
+          {/* Desktop Navigation */}
           <nav className="hidden items-center space-x-8 md:flex">
             <Link href="/" className="text-sm font-medium text-[#1A2B4C] hover:text-[#F05A28] transition relative group">
               Home
@@ -79,6 +121,7 @@ export default function Header() {
             </Link>
           </nav>
 
+          {/* Right Actions */}
           <div className="flex items-center space-x-4">
             <Link
               href="/request-quote"
@@ -97,6 +140,8 @@ export default function Header() {
                 </span>
               )}
             </button>
+            
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-2 hover:bg-gray-100 rounded-full transition text-2xl"
@@ -106,6 +151,7 @@ export default function Header() {
           </div>
         </div>
 
+        {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden border-t bg-white shadow-lg">
             <div className="container mx-auto px-4 py-4 space-y-3">
@@ -115,6 +161,7 @@ export default function Header() {
               <Link href="/about" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">About Us</Link>
               <Link href="/tender-support" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">Tender Support</Link>
               <Link href="/contact" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">Contact</Link>
+              <Link href="/admin" className="block text-[#F05A28] hover:text-[#d94a1e] transition font-medium">⚙️ Admin</Link>
               <Link href="/request-quote" className="block rounded-lg bg-[#F05A28] px-4 py-3 text-center text-white hover:bg-[#d94a1e] transition font-semibold">
                 Request Quote
               </Link>
@@ -123,6 +170,7 @@ export default function Header() {
         )}
       </header>
 
+      {/* Quote Drawer */}
       <QuoteDrawer isOpen={isQuoteOpen} onClose={() => setIsQuoteOpen(false)} />
     </>
   );
