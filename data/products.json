@@ -230,17 +230,15 @@
     },
     {
       "id": 13,
-      "name": "AbaNtu Logo",
-      "slug": "abantu-logo",
-      "category": "stationery",
-      "description": "Stunning",
-      "features": [
-        "Super"
-      ],
-      "price": "150 00",
-      "unit": "Each",
-      "image": "/images/products/1782738692108-by22e8.png",
-      "sku": "EDU-ABA",
+      "name": "AbaNtu",
+      "slug": "abantu",
+      "category": "ppe",
+      "description": "Protection",
+      "features": [],
+      "price": "15000 00",
+      "unit": "1x1",
+      "image": "/images/products/1782765587332-cmh9c.png",
+      "sku": "ab-b",
       "featured": true,
       "stock": "In Stock"
     }
@@ -254,7 +252,7 @@
     {
       "id": "stationery",
       "name": "Stationery",
-      "count": 4
+      "count": 3
     },
     {
       "id": "furniture",
@@ -264,7 +262,7 @@
     {
       "id": "ppe",
       "name": "PPE & Safety",
-      "count": 3
+      "count": 4
     },
     {
       "id": "cleaning",
