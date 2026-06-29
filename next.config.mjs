@@ -16,6 +16,8 @@ const nextConfig = {
     unoptimized: true,
   },
   output: 'standalone',
+  // Add empty turbopack config to silence the error
+  turbopack: {},
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
