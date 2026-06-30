@@ -16,8 +16,6 @@ import {
   Phone,
   Mail,
   Clock,
-  Star,
-  Heart,
   Handshake,
   Target,
   BarChart,
@@ -27,8 +25,12 @@ import {
 } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import SectionTitle from '@/components/ui/SectionTitle';
+import { siteImages } from '@/config/images';
+import ClientImage from '@/components/ui/ClientImage';
 
 export default function TenderSupportPage() {
+  const heroImage = siteImages.hero[0] || 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&h=1080&fit=crop&q=80';
+
   const capabilities = [
     { 
       icon: Truck, 
@@ -66,10 +68,10 @@ export default function TenderSupportPage() {
   ];
 
   const sectors = [
-    { name: 'Education', icon: '🏫', image: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&h=300&fit=crop&q=80' },
-    { name: 'Healthcare', icon: '🏥', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&h=300&fit=crop&q=80' },
-    { name: 'Government', icon: '🏛️', image: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400&h=300&fit=crop&q=80' },
-    { name: 'Private Sector', icon: '🏢', image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop&q=80' },
+    { name: 'Education', icon: SchoolIcon, image: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&h=300&fit=crop&q=80' },
+    { name: 'Healthcare', icon: HealthcareIcon, image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&h=300&fit=crop&q=80' },
+    { name: 'Government', icon: GovernmentIcon, image: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400&h=300&fit=crop&q=80' },
+    { name: 'Private Sector', icon: PrivateIcon, image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop&q=80' },
   ];
 
   return (
@@ -79,7 +81,7 @@ export default function TenderSupportPage() {
         <div 
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&h=1080&fit=crop&q=80)',
+            backgroundImage: `url(${heroImage})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -157,10 +159,11 @@ export default function TenderSupportPage() {
               return (
                 <div key={index} className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
                   <div className="h-48 overflow-hidden">
-                    <img
+                    <ClientImage
                       src={cap.image}
                       alt={cap.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      fallbackSrc={`https://placehold.co/400x300/1A2B4C/FFFFFF?text=${cap.title}`}
                     />
                   </div>
                   <div className="p-6">
@@ -186,21 +189,25 @@ export default function TenderSupportPage() {
           />
           
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {sectors.map((sector, index) => (
-              <div key={index} className="relative group overflow-hidden rounded-xl min-h-[200px]">
-                <img
-                  src={sector.image}
-                  alt={sector.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1A2B4C]/90 via-[#1A2B4C]/50 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <span className="text-3xl block mb-2">{sector.icon}</span>
-                  <h3 className="text-xl font-bold">{sector.name}</h3>
-                  <p className="text-sm text-gray-200 opacity-80">✓ Tender Ready</p>
+            {sectors.map((sector, index) => {
+              const Icon = sector.icon;
+              return (
+                <div key={index} className="relative group overflow-hidden rounded-xl min-h-[200px]">
+                  <ClientImage
+                    src={sector.image}
+                    alt={sector.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    fallbackSrc={`https://placehold.co/400x300/1A2B4C/FFFFFF?text=${sector.name}`}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1A2B4C]/90 via-[#1A2B4C]/50 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <Icon className="w-8 h-8 text-[#F05A28] mb-2" />
+                    <h3 className="text-xl font-bold">{sector.name}</h3>
+                    <p className="text-sm text-gray-200 opacity-80">Tender Ready</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </Container>
       </section>
@@ -295,7 +302,7 @@ export default function TenderSupportPage() {
         <div 
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1920&h=600&fit=crop&q=80)',
+            backgroundImage: `url(${siteImages.hero[2] || 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1920&h=600&fit=crop&q=80'})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -333,5 +340,43 @@ export default function TenderSupportPage() {
         </Container>
       </section>
     </div>
+  );
+}
+
+// Icon components without emojis
+function SchoolIcon(props: any) {
+  return (
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+    </svg>
+  );
+}
+
+function HealthcareIcon(props: any) {
+  return (
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 12h-4l-3 9-4-18-3 9H2"/>
+    </svg>
+  );
+}
+
+function GovernmentIcon(props: any) {
+  return (
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 21h18"/>
+      <path d="M5 21V7l7-4 7 4v14"/>
+      <path d="M9 21v-4h6v4"/>
+      <rect x="9" y="9" width="6" height="3"/>
+    </svg>
+  );
+}
+
+function PrivateIcon(props: any) {
+  return (
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+    </svg>
   );
 }
