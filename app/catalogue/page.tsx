@@ -18,6 +18,7 @@ import {
 import { useQuoteStore } from '@/store/quoteStore';
 import Container from '@/components/ui/Container';
 import SectionTitle from '@/components/ui/SectionTitle';
+import { siteImages } from '@/config/images';
 
 interface Product {
   id: number;
@@ -48,6 +49,9 @@ export default function CataloguePage() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [loading, setLoading] = useState(true);
   const addToQuote = useQuoteStore((state) => state.addItem);
+
+  // Use the first hero image for the catalogue hero
+  const heroImage = siteImages.hero[0] || 'https://images.unsplash.com/photo-1584473457406-6240486418e9?w=1920&h=1080&fit=crop&q=80';
 
   useEffect(() => {
     fetchProducts();
@@ -104,7 +108,7 @@ export default function CataloguePage() {
         <div 
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1584473457406-6240486418e9?w=1920&h=1080&fit=crop&q=80)',
+            backgroundImage: `url(${heroImage})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}

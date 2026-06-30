@@ -5,31 +5,31 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Container from './Container';
 import SectionTitle from './SectionTitle';
+import { siteImages } from '@/config/images';
 
-// ✅ REPLACE THESE URLs with your actual category images
 const categories = [
   { 
     id: 'stationery', 
     name: 'Stationery', 
-    image: 'https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=600&h=400&fit=crop&q=80',
+    image: siteImages.categories.stationery,
     description: 'Pens, paper, files & more'
   },
   { 
     id: 'furniture', 
     name: 'Office Furniture', 
-    image: 'https://images.unsplash.com/photo-1584473457406-6240486418e9?w=600&h=400&fit=crop&q=80',
+    image: siteImages.categories.furniture,
     description: 'Desks, chairs, cabinets'
   },
   { 
     id: 'ppe', 
     name: 'PPE & Safety', 
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&h=400&fit=crop&q=80',
+    image: siteImages.categories.ppe,
     description: 'Masks, gloves, overalls'
   },
   { 
     id: 'cleaning', 
     name: 'Cleaning & Hygiene', 
-    image: 'https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=600&h=400&fit=crop&q=80',
+    image: siteImages.categories.cleaning,
     description: 'Chemicals, disinfectants'
   },
 ];

@@ -15,16 +15,10 @@ import {
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import Container from './Container';
-
-// ✅ REPLACE THESE URLs with your actual images
-const heroImages = [
-  'https://images.unsplash.com/photo-1584473457406-6240486418e9?w=1920&h=1080&fit=crop&q=80', // Office
-  'https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=1920&h=1080&fit=crop&q=80', // Stationery
-  'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1920&h=1080&fit=crop&q=80', // PPE
-  'https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=1920&h=1080&fit=crop&q=80', // Cleaning
-];
+import { siteImages } from '@/config/images';
 
 export default function Hero() {
+  const heroImages = siteImages.hero;
   const [currentImage, setCurrentImage] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
@@ -34,7 +28,7 @@ export default function Hero() {
       setCurrentImage((prev) => (prev + 1) % heroImages.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, heroImages.length]);
 
   return (
     <section className="relative overflow-hidden min-h-[90vh] flex items-center">

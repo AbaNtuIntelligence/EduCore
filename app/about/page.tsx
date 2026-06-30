@@ -200,15 +200,16 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* Mission & Vision */}
+      {/* Mission & Vision with ClientImage */}
       <section className="py-20">
         <Container>
           <div className="grid gap-8 md:grid-cols-2">
             <div className="relative overflow-hidden rounded-2xl min-h-[300px]">
               <ClientImage
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop&q=80"
-                alt="Team working"
+                src="https://i.imgur.com/eehi1Bf.jpeg"
+                alt="Our Mission"
                 className="w-full h-full object-cover"
+                fallbackSrc="https://placehold.co/800x600/1A2B4C/FFFFFF?text=Our+Mission"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1A2B4C]/80 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
@@ -221,9 +222,10 @@ export default function AboutPage() {
             </div>
             <div className="relative overflow-hidden rounded-2xl min-h-[300px]">
               <ClientImage
-                src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=600&fit=crop&q=80"
-                alt="Vision"
+                src="https://i.imgur.com/q5qUaQT.jpeg"
+                alt="Our Vision"
                 className="w-full h-full object-cover"
+                fallbackSrc="https://placehold.co/800x600/1A2B4C/FFFFFF?text=Our+Vision"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#F05A28]/90 via-[#F05A28]/70 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8 text-white">

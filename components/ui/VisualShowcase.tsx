@@ -3,31 +3,31 @@
 import { motion } from 'framer-motion';
 import Container from './Container';
 import SectionTitle from './SectionTitle';
+import { siteImages } from '@/config/images';
 
-// ✅ REPLACE THESE URLs with your actual showcase images
 const showcaseItems = [
   {
     title: 'Premium Stationery',
     description: 'Quality writing materials, paper products, and office essentials',
-    image: 'https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=800&h=600&fit=crop&q=80',
+    image: siteImages.showcase.stationery,
     category: 'Stationery'
   },
   {
     title: 'Office Furniture',
     description: 'Ergonomic desks, chairs, and storage solutions',
-    image: 'https://images.unsplash.com/photo-1584473457406-6240486418e9?w=800&h=600&fit=crop&q=80',
+    image: siteImages.showcase.furniture,
     category: 'Furniture'
   },
   {
     title: 'PPE & Safety',
     description: 'Protective equipment for workplace safety',
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&h=600&fit=crop&q=80',
+    image: siteImages.showcase.ppe,
     category: 'PPE'
   },
   {
     title: 'Cleaning & Hygiene',
     description: 'Industrial cleaning supplies and hygiene solutions',
-    image: 'https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=800&h=600&fit=crop&q=80',
+    image: siteImages.showcase.hygiene,
     category: 'Hygiene'
   },
 ];
