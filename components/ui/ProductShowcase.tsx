@@ -14,8 +14,10 @@ import {
   PenTool,
   Sofa,
   HardHat,
-  Sparkles
+  Sparkles,
+  Plus
 } from 'lucide-react';
+import { useQuoteStore } from '@/store/quoteStore';
 import Container from './Container';
 import SectionTitle from './SectionTitle';
 
@@ -57,6 +59,7 @@ export default function ProductShowcase() {
   const [itemsPerView, setItemsPerView] = useState(4);
   const carouselRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const { addItem } = useQuoteStore();
 
   useEffect(() => {
     fetchProducts();
@@ -125,6 +128,14 @@ export default function ProductShowcase() {
 
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev - 1 + filteredProducts.length) % filteredProducts.length);
+  };
+
+  const handleAddToQuote = (product: Product, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem(product, 1);
+    console.log('Added to quote:', product.name);
+    alert(`✅ Added "${product.name}" to your quote!`);
   };
 
   const getVisibleProducts = () => {
@@ -237,40 +248,45 @@ export default function ProductShowcase() {
                 className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
               >
                 {visibleProducts.map((product, index) => (
-                  <Link
+                  <div
                     key={`${product.id}-${index}`}
-                    href={`/product/${product.slug}`}
-                    className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 block cursor-pointer"
+                    className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
                   >
-                    <div className="aspect-square bg-gray-100 relative overflow-hidden">
-                      {product.image && product.image.startsWith('http') ? (
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = 'https://placehold.co/400x400/1A2B4C/FFFFFF?text=📦';
-                          }}
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-6xl">
-                          📦
-                        </div>
-                      )}
-                      {product.featured && (
-                        <span className="absolute top-2 right-2 bg-[#F05A28] text-white text-xs px-2 py-1 rounded-full flex items-center gap-1">
-                          <Star className="w-3 h-3 fill-white" /> Featured
+                    {/* Product Image - Clickable to product page */}
+                    <Link href={`/product/${product.slug}`} className="block">
+                      <div className="aspect-square bg-gray-100 relative overflow-hidden">
+                        {product.image && product.image.startsWith('http') ? (
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = 'https://placehold.co/400x400/1A2B4C/FFFFFF?text=📦';
+                            }}
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-6xl">
+                            📦
+                          </div>
+                        )}
+                        {product.featured && (
+                          <span className="absolute top-2 right-2 bg-[#F05A28] text-white text-xs px-2 py-1 rounded-full flex items-center gap-1">
+                            <Star className="w-3 h-3 fill-white" /> Featured
+                          </span>
+                        )}
+                        <span className="absolute top-2 left-2 bg-[#1A2B4C]/80 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm capitalize">
+                          {product.category}
                         </span>
-                      )}
-                      <span className="absolute top-2 left-2 bg-[#1A2B4C]/80 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm capitalize">
-                        {product.category}
-                      </span>
-                    </div>
+                      </div>
+                    </Link>
 
+                    {/* Product Info */}
                     <div className="p-4">
-                      <h3 className="font-semibold text-[#1A2B4C] group-hover:text-[#F05A28] transition line-clamp-1">
-                        {product.name}
-                      </h3>
+                      <Link href={`/product/${product.slug}`} className="block">
+                        <h3 className="font-semibold text-[#1A2B4C] group-hover:text-[#F05A28] transition line-clamp-1">
+                          {product.name}
+                        </h3>
+                      </Link>
                       <p className="text-sm text-gray-600 mt-1 line-clamp-2">
                         {product.description}
                       </p>
@@ -287,13 +303,22 @@ export default function ProductShowcase() {
                           {product.stock}
                         </span>
                       </div>
-                      <div className="mt-3">
-                        <span className="w-full text-center block bg-[#F05A28] hover:bg-[#d94a1e] text-white px-3 py-1.5 rounded-lg text-sm font-medium transition">
-                          View Details
-                        </span>
+                      <div className="mt-3 flex gap-2">
+                        <button
+                          onClick={(e) => handleAddToQuote(product, e)}
+                          className="flex-1 bg-[#F05A28] hover:bg-[#d94a1e] text-white px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center justify-center gap-1 shadow-md hover:shadow-lg"
+                        >
+                          <Plus className="w-4 h-4" /> Quote
+                        </button>
+                        <Link
+                          href={`/product/${product.slug}`}
+                          className="flex-1 bg-gray-100 hover:bg-gray-200 text-[#1A2B4C] px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center justify-center gap-1"
+                        >
+                          <Eye className="w-4 h-4" /> View
+                        </Link>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </motion.div>
             </AnimatePresence>
