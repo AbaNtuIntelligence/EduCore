@@ -13,13 +13,14 @@ export default function ClientImage({
   src, 
   alt, 
   className = '',
-  fallbackSrc = 'https://placehold.co/400x300/1A2B4C/FFFFFF?text=Image'
+  fallbackSrc = 'https://placehold.co/800x600/1A2B4C/FFFFFF?text=Image'
 }: ClientImageProps) {
   const [imgSrc, setImgSrc] = useState(src);
   const [hasError, setHasError] = useState(false);
 
   const handleError = () => {
     if (!hasError) {
+      console.log('Image failed to load:', src);
       setImgSrc(fallbackSrc);
       setHasError(true);
     }
