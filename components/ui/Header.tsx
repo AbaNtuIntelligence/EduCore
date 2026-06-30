@@ -53,12 +53,11 @@ export default function Header() {
                 <Download className="w-4 h-4" /> Download Catalogue (PDF)
               </Link>
 
-              {/* Admin Section - Only visible when authenticated */}
+              {/* Admin Section - Only icon on hover when authenticated */}
               {!loading && isAuthenticated && (
                 <>
                   <span className="text-gray-400">|</span>
                   <div className="relative group">
-                    {/* Admin Icon - Only the icon, no text */}
                     <span className="text-gray-400 hover:text-[#F05A28] transition cursor-pointer">
                       <LayoutDashboard className="w-5 h-5" />
                     </span>
@@ -83,6 +82,7 @@ export default function Header() {
                 </>
               )}
 
+              {/* Admin Login link when not authenticated */}
               {!loading && !isAuthenticated && (
                 <>
                   <span className="text-gray-400">|</span>
