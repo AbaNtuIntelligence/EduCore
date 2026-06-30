@@ -18,18 +18,17 @@ function saveProductsData(data: any) {
   fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
 }
 
-// GET /api/products - Get all products (or single product if id is provided)
+// GET /api/products - Get all products (or single product if slug is provided)
 export async function GET(request: NextRequest) {
   try {
     const url = new URL(request.url);
-    const id = url.searchParams.get('id');
+    const slug = url.searchParams.get('slug');
     
     const data = getProductsData();
     
-    if (id) {
-      // Get single product
-      const productId = parseInt(id);
-      const product = data.products.find((p: any) => p.id === productId);
+    if (slug) {
+      // Get single product by slug
+      const product = data.products.find((p: any) => p.slug === slug);
       
       if (!product) {
         return NextResponse.json(
@@ -119,10 +118,15 @@ export async function POST(request: Request) {
 // PUT /api/products - Update a product
 export async function PUT(request: Request) {
   try {
+    console.log('=== PUT REQUEST ===');
+    
     const formData = await request.formData();
     const idParam = formData.get('id') as string;
     
+    console.log('ID param:', idParam);
+    
     if (!idParam) {
+      console.log('❌ No ID provided');
       return NextResponse.json(
         { error: 'Product ID is required' },
         { status: 400 }
@@ -130,11 +134,14 @@ export async function PUT(request: Request) {
     }
     
     const id = parseInt(idParam);
-    console.log('=== PUT REQUEST ===');
     console.log('Product ID:', id);
     
     const data = getProductsData();
+    console.log('Total products:', data.products.length);
+    console.log('Product IDs:', data.products.map((p: any) => p.id).join(', '));
+    
     const index = data.products.findIndex((p: any) => p.id === id);
+    console.log('Found at index:', index);
     
     if (index === -1) {
       console.log('❌ Product not found with ID:', id);
@@ -173,7 +180,6 @@ export async function PUT(request: Request) {
     if (featured !== undefined) data.products[index].featured = featured;
     if (features.length > 0) data.products[index].features = features;
     
-    // Update slug if name changed
     if (name) {
       data.products[index].slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     }
@@ -208,8 +214,6 @@ export async function DELETE(request: NextRequest) {
     }
     
     const productId = parseInt(id);
-    console.log('DELETE - Product ID:', productId);
-    
     const data = getProductsData();
     const index = data.products.findIndex((p: any) => p.id === productId);
     

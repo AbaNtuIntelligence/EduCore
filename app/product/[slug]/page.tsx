@@ -1,4 +1,7 @@
-import { notFound } from 'next/navigation';
+"use client";
+
+import { useState, useEffect } from 'react';
+import { notFound, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { 
   ArrowLeft, 
@@ -7,11 +10,28 @@ import {
   Truck, 
   Shield, 
   Star,
-  Award
+  Award,
+  Plus,
+  Minus
 } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import ClientImage from '@/components/ui/ClientImage';
-import { getProductBySlug, getProducts } from '@/lib/products';
+import { useQuoteStore } from '@/store/quoteStore';
+
+interface Product {
+  id: number;
+  name: string;
+  slug: string;
+  category: string;
+  description: string;
+  features: string[];
+  price: string;
+  unit: string;
+  image: string;
+  sku: string;
+  featured: boolean;
+  stock: string;
+}
 
 interface PageProps {
   params: Promise<{
@@ -19,24 +39,77 @@ interface PageProps {
   }>;
 }
 
-export default async function ProductPage({ params }: PageProps) {
-  const { slug } = await params;
-  console.log('🔍 Product slug requested:', slug);
-  
-  const allProducts = getProducts();
-  console.log('📦 Total products:', allProducts.products.length);
-  
-  const product = getProductBySlug(slug);
-  console.log('✅ Product found:', product ? 'Yes - ' + product.name : 'No');
+export default function ProductPage({ params }: PageProps) {
+  const router = useRouter();
+  const [product, setProduct] = useState<Product | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [quantity, setQuantity] = useState(1);
+  const { addItem } = useQuoteStore();
 
-  if (!product) {
-    console.log('❌ Product not found for slug:', slug);
-    notFound();
+  useEffect(() => {
+    async function loadProduct() {
+      try {
+        const { slug } = await params;
+        console.log('🔍 Product slug requested:', slug);
+        
+        // Fetch product data via API
+        const res = await fetch(`/api/products?slug=${slug}`);
+        if (!res.ok) {
+          console.log('❌ Product not found for slug:', slug);
+          notFound();
+          return;
+        }
+        const data = await res.json();
+        console.log('✅ Product found:', data.name);
+        setProduct(data);
+        
+        // Fetch related products (same category)
+        const allRes = await fetch('/api/products');
+        const allData = await allRes.json();
+        const related = allData.products
+          .filter((p: Product) => p.category === data.category && p.id !== data.id)
+          .slice(0, 4);
+        setRelatedProducts(related);
+      } catch (error) {
+        console.error('Error loading product:', error);
+        notFound();
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadProduct();
+  }, [params]);
+
+  const handleAddToQuote = () => {
+    if (product) {
+      addItem(product, quantity);
+      console.log(`Added ${quantity} x ${product.name} to quote`);
+      alert(`✅ Added ${quantity} x "${product.name}" to your quote!`);
+    }
+  };
+
+  const increaseQuantity = () => {
+    setQuantity(prev => prev + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(prev => prev - 1);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="bg-gray-50 min-h-screen flex items-center justify-center">
+        <div className="text-2xl text-gray-400">Loading product...</div>
+      </div>
+    );
   }
 
-  const relatedProducts = allProducts.products
-    .filter(p => p.category === product.category && p.id !== product.id)
-    .slice(0, 4);
+  if (!product) {
+    return null;
+  }
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -118,6 +191,26 @@ export default async function ProductPage({ params }: PageProps) {
               </div>
             )}
 
+            {/* Quantity Selector */}
+            <div className="border-t border-gray-200 pt-6">
+              <h3 className="font-semibold text-[#1A2B4C] mb-3">Quantity</h3>
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={decreaseQuantity}
+                  className="w-10 h-10 rounded-full border border-gray-300 hover:border-[#F05A28] hover:bg-[#F05A28]/10 transition flex items-center justify-center"
+                >
+                  <Minus className="w-4 h-4" />
+                </button>
+                <span className="text-xl font-bold text-[#1A2B4C] w-12 text-center">{quantity}</span>
+                <button
+                  onClick={increaseQuantity}
+                  className="w-10 h-10 rounded-full border border-gray-300 hover:border-[#F05A28] hover:bg-[#F05A28]/10 transition flex items-center justify-center"
+                >
+                  <Plus className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
             {/* Trust Badges */}
             <div className="border-t border-gray-200 pt-6">
               <div className="grid grid-cols-3 gap-4">
@@ -139,7 +232,10 @@ export default async function ProductPage({ params }: PageProps) {
             {/* Action Buttons */}
             <div className="border-t border-gray-200 pt-6">
               <div className="flex flex-wrap gap-4">
-                <button className="flex-1 bg-[#F05A28] hover:bg-[#d94a1e] text-white px-6 py-3 rounded-lg font-semibold transition shadow-lg shadow-[#F05A28]/30 flex items-center justify-center gap-2">
+                <button
+                  onClick={handleAddToQuote}
+                  className="flex-1 bg-[#F05A28] hover:bg-[#d94a1e] text-white px-6 py-3 rounded-lg font-semibold transition shadow-lg shadow-[#F05A28]/30 flex items-center justify-center gap-2"
+                >
                   <ShoppingCart className="w-5 h-5" /> Add to Quote
                 </button>
                 <Link
