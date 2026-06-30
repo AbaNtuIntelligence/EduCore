@@ -35,7 +35,7 @@ export default function Header() {
           <div className="flex items-center justify-between">
             <span className="text-sm">Your Trusted Partner for Stationery, PPE & Hygiene Solutions</span>
             <div className="flex items-center space-x-4">
-              {/* Social Icons - Using simple text */}
+              {/* Social Icons */}
               <div className="flex items-center space-x-3">
                 <a href="#" className="hover:text-[#F05A28] transition font-bold text-sm">f</a>
                 <a href="#" className="hover:text-[#F05A28] transition font-bold text-sm">in</a>
@@ -45,7 +45,6 @@ export default function Header() {
               
               <span className="text-gray-400">|</span>
               
-              {/* Link to dynamic PDF catalogue */}
               <Link
                 href="/pdf-catalogue"
                 target="_blank"
@@ -54,13 +53,14 @@ export default function Header() {
                 <Download className="w-4 h-4" /> Download Catalogue (PDF)
               </Link>
 
-              {/* Admin Section */}
+              {/* Admin Section - Only visible when authenticated */}
               {!loading && isAuthenticated && (
                 <>
                   <span className="text-gray-400">|</span>
                   <div className="relative group">
-                    <span className="text-gray-400 hover:text-[#F05A28] transition cursor-pointer text-sm flex items-center gap-1">
-                      <LayoutDashboard className="w-4 h-4" /> Admin <span className="text-[10px]">▼</span>
+                    {/* Admin Icon - Only the icon, no text */}
+                    <span className="text-gray-400 hover:text-[#F05A28] transition cursor-pointer">
+                      <LayoutDashboard className="w-5 h-5" />
                     </span>
                     <div className="absolute right-0 top-full mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[9999]">
                       <div className="bg-[#1A2B4C] border border-white/10 rounded-lg shadow-2xl p-2 min-w-[160px]">
@@ -128,10 +128,6 @@ export default function Header() {
               </Link>
               <Link href="/contact" className="text-sm font-medium text-[#1A2B4C] hover:text-[#F05A28] transition relative group">
                 Contact
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#F05A28] transition-all group-hover:w-full"></span>
-              </Link>
-              <Link href="/pdf-catalogue" target="_blank" className="text-sm font-medium text-[#F05A28] hover:text-[#d94a1e] transition relative group">
-                📄 PDF
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#F05A28] transition-all group-hover:w-full"></span>
               </Link>
             </nav>
