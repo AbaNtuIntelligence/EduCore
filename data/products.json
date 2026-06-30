@@ -1,25 +1,6 @@
 {
   "products": [
     {
-      "id": 1,
-      "name": "A4 80gsm Copy Paper - Box of 5 Reams",
-      "slug": "a4-copy-paper-80gsm",
-      "category": "stationery",
-      "description": "Premium quality A4 copy paper for everyday printing and photocopying. Bright white finish, suitable for double-sided printing.",
-      "features": [
-        "80gsm weight",
-        "Acid-free for longevity",
-        "Suitable for double-sided printing",
-        "Bright white finish"
-      ],
-      "price": "R 285.00",
-      "unit": "per box",
-      "image": "https://i.imgur.com/I136Dqf.png",
-      "sku": "EDU-PAP-001",
-      "featured": true,
-      "stock": "In Stock"
-    },
-    {
       "id": 2,
       "name": "Executive Office Desk - 1800mm",
       "slug": "executive-office-desk-1800mm",
@@ -33,7 +14,7 @@
       ],
       "price": "R 4,250.00",
       "unit": "per unit",
-      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Executive+Desk",
+      "image": "https://i.imgur.com/wOyKRAu.jpeg",
       "sku": "EDU-FUR-012",
       "featured": true,
       "stock": "In Stock"
@@ -79,18 +60,18 @@
     {
       "id": 5,
       "name": "Gel Pens - Box of 50",
-      "slug": "gel-pens-box-50",
+      "slug": "gel-pens-box-of-50",
       "category": "stationery",
       "description": "Smooth writing gel pens with vibrant ink. Perfect for office, school, and everyday use. Available in black, blue, and red.",
       "features": [
-        "0.7mm tip",
-        "Vibrant ink colours",
-        "Comfortable grip",
+        "0.7mm tip\r",
+        "Vibrant ink colours\r",
+        "Comfortable grip\r",
         "Long-lasting"
       ],
       "price": "R 95.00",
       "unit": "per box of 50",
-      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Gel+Pens",
+      "image": "https://i.imgur.com/Z04403n.jpeg",
       "sku": "EDU-PEN-023",
       "featured": false,
       "stock": "In Stock"
@@ -102,16 +83,16 @@
       "category": "furniture",
       "description": "Premium ergonomic office chair with adjustable lumbar support and headrest. Designed for all-day comfort and productivity.",
       "features": [
-        "Adjustable lumbar support",
-        "Height adjustment",
-        "Headrest included",
+        "Adjustable lumbar support\r",
+        "Height adjustment\r",
+        "Headrest included\r",
         "Breathable mesh back"
       ],
       "price": "R 3,850.00",
       "unit": "per unit",
-      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Office+Chair",
+      "image": "https://i.imgur.com/nO0fg2g.jpeg",
       "sku": "EDU-FUR-035",
-      "featured": false,
+      "featured": true,
       "stock": "In Stock"
     },
     {
@@ -140,33 +121,33 @@
       "category": "ppe",
       "description": "High-visibility safety overalls with reflective stripes. Certified for workplace safety and comfort.",
       "features": [
-        "Hi-vis yellow/orange",
-        "Reflective stripes",
-        "Durable 100% polyester",
+        "Hi-vis yellow/orange\r",
+        "Reflective stripes\r",
+        "Durable 100% polyester\r",
         "Multiple sizes available"
       ],
       "price": "R 225.00",
       "unit": "per unit",
-      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Safety+Overalls",
+      "image": "https://i.imgur.com/bu8Ei4n.jpeg",
       "sku": "EDU-PPE-067",
-      "featured": false,
+      "featured": true,
       "stock": "In Stock"
     },
     {
       "id": 9,
       "name": "A3 Filing Cabinet - 4 Drawer",
-      "slug": "a3-filing-cabinet",
+      "slug": "a3-filing-cabinet-4-drawer",
       "category": "furniture",
       "description": "Heavy-duty 4-drawer filing cabinet. Perfect for A3 documents and large capacity filing needs.",
       "features": [
-        "4 spacious drawers",
-        "Heavy-duty steel construction",
-        "Secure locking mechanism",
+        "4 spacious drawers\r",
+        "Heavy-duty steel construction\r",
+        "Secure locking mechanism\r",
         "A3 size compatible"
       ],
       "price": "R 2,650.00",
       "unit": "per unit",
-      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Filing+Cabinet",
+      "image": "https://i.imgur.com/XHWH4FD.jpeg",
       "sku": "EDU-FUR-089",
       "featured": false,
       "stock": "In Stock"
@@ -193,18 +174,18 @@
     {
       "id": 11,
       "name": "A4 Spiral Notebook - Pack of 10",
-      "slug": "spiral-notebook-pack-10",
+      "slug": "a4-spiral-notebook-pack-of-10",
       "category": "stationery",
       "description": "Premium A4 spiral notebooks with durable cover and 80gsm pages. Perfect for note-taking and record keeping.",
       "features": [
-        "80gsm paper",
-        "Durable cover",
-        "Spiral binding",
+        "80gsm paper\r",
+        "Durable cover\r",
+        "Spiral binding\r",
         "Available in multiple colours"
       ],
       "price": "R 45.00",
       "unit": "per pack of 10",
-      "image": "https://placehold.co/400x400/1A2B4C/FFFFFF?text=Spiral+Notebook",
+      "image": "https://i.imgur.com/vAE2FME.jpeg",
       "sku": "EDU-NTB-016",
       "featured": false,
       "stock": "In Stock"
@@ -225,22 +206,6 @@
       "unit": "per pack of 48",
       "image": "https://i.imgur.com/iekMqof.png",
       "sku": "EDU-HYG-092",
-      "featured": true,
-      "stock": "In Stock"
-    },
-    {
-      "id": 13,
-      "name": "John Pama",
-      "slug": "john-pama",
-      "category": "stationery",
-      "description": "Staionery",
-      "features": [
-        "Desks"
-      ],
-      "price": "2000 00",
-      "unit": "1x1",
-      "image": "https://i.imgur.com/4olqYUc.png",
-      "sku": "j-p",
       "featured": true,
       "stock": "In Stock"
     }
