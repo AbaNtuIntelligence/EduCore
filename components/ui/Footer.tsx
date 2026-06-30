@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import { useState } from 'react';
 import { 
   Phone, 
   Mail, 
@@ -13,12 +14,13 @@ import Container from './Container';
 
 export default function Footer() {
   const { isAuthenticated, loading } = useAuth();
+  const [imgError, setImgError] = useState(false);
 
   return (
     <footer className="bg-[#1A2B4C] text-white border-t border-white/10">
       <Container className="py-12">
         <div className="grid gap-8 md:grid-cols-4">
-          {/* Company */}
+          {/* Column 1: Company */}
           <div>
             <h3 className="text-2xl font-bold mb-4 tracking-tight">EDUCORE</h3>
             <p className="text-sm text-gray-300 leading-relaxed">
@@ -39,7 +41,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Column 2: Quick Links */}
           <div>
             <h4 className="mb-4 text-lg font-semibold text-white">Quick Links</h4>
             <ul className="space-y-2 text-sm">
@@ -51,7 +53,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Resources */}
+          {/* Column 3: Resources */}
           <div>
             <h4 className="mb-4 text-lg font-semibold text-white">Resources</h4>
             <Link
@@ -70,7 +72,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Social & Legal */}
+          {/* Column 4: Social & Legal */}
           <div>
             <h4 className="mb-4 text-lg font-semibold text-white">Connect With Us</h4>
             <div className="flex space-x-3">
@@ -96,6 +98,33 @@ export default function Footer() {
                 </Link>
               )}
             </div>
+          </div>
+        </div>
+
+        {/* Company Signature - AbaNtu Intelligence */}
+        <div className="mt-8 pt-6 border-t border-white/10">
+          <div className="flex flex-col items-center justify-center gap-2 text-center">
+            <div className="flex items-center gap-3">
+              {/* Logo with fallback */}
+              {!imgError ? (
+                <img 
+                  src="https://i.imgur.com/2hvvFsN.png" 
+                  alt="AbaNtu Intelligence" 
+                  className="w-10 h-10 object-contain rounded-full"
+                  onError={() => setImgError(true)}
+                />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-[#F05A28]/20 flex items-center justify-center">
+                  <span className="text-[#F05A28] font-bold text-sm">AI</span>
+                </div>
+              )}
+              <span className="text-sm text-gray-400">
+                Powered by <span className="text-[#F05A28] font-semibold">AbaNtu Intelligence</span>
+              </span>
+            </div>
+            <p className="text-xs text-gray-500">
+              Your trusted partner for quality supply solutions
+            </p>
           </div>
         </div>
       </Container>
