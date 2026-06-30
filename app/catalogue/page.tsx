@@ -13,7 +13,8 @@ import {
   Filter,
   ArrowRight,
   ShoppingCart,
-  CheckCircle
+  CheckCircle,
+  Eye
 } from 'lucide-react';
 import { useQuoteStore } from '@/store/quoteStore';
 import Container from '@/components/ui/Container';
@@ -50,7 +51,6 @@ export default function CataloguePage() {
   const [loading, setLoading] = useState(true);
   const addToQuote = useQuoteStore((state) => state.addItem);
 
-  // Use the first hero image for the catalogue hero
   const heroImage = siteImages.hero[0] || 'https://images.unsplash.com/photo-1584473457406-6240486418e9?w=1920&h=1080&fit=crop&q=80';
 
   useEffect(() => {
@@ -246,86 +246,86 @@ export default function CataloguePage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                   exit={{ opacity: 0, y: -20 }}
-                  className={`bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 ${
-                    viewMode === 'list' ? 'flex items-center gap-6 p-4' : 'overflow-hidden'
-                  }`}
+                  className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 overflow-hidden"
                 >
-                  {/* Product Image */}
-                  <div className={`${
-                    viewMode === 'list' ? 'w-32 h-32 flex-shrink-0' : 'h-48 w-full'
-                  } bg-gray-100 flex items-center justify-center relative overflow-hidden`}>
-                    {product.image && product.image.startsWith('http') ? (
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = 'https://placehold.co/400x400/1A2B4C/FFFFFF?text=📦';
-                        }}
-                      />
-                    ) : (
-                      <span className="text-6xl">📦</span>
-                    )}
-                    <span className="absolute top-2 left-2 text-xs bg-[#1A2B4C]/80 text-white px-2 py-1 rounded-full backdrop-blur-sm capitalize">
-                      {product.category}
-                    </span>
-                    {product.featured && (
-                      <span className="absolute top-2 right-2 text-xs bg-[#F05A28] text-white px-2 py-1 rounded-full">
-                        ★ Featured
+                  <Link
+                    href={`/product/${product.slug}`}
+                    className="block"
+                  >
+                    {/* Product Image */}
+                    <div className={`${
+                      viewMode === 'list' ? 'w-32 h-32 flex-shrink-0' : 'h-48 w-full'
+                    } bg-gray-100 flex items-center justify-center relative overflow-hidden`}>
+                      {product.image && product.image.startsWith('http') ? (
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = 'https://placehold.co/400x400/1A2B4C/FFFFFF?text=📦';
+                          }}
+                        />
+                      ) : (
+                        <span className="text-6xl">📦</span>
+                      )}
+                      <span className="absolute top-2 left-2 text-xs bg-[#1A2B4C]/80 text-white px-2 py-1 rounded-full backdrop-blur-sm capitalize">
+                        {product.category}
                       </span>
-                    )}
-                  </div>
-
-                  {/* Product Info */}
-                  <div className={`${
-                    viewMode === 'list' ? 'flex-1' : 'p-4'
-                  }`}>
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-[#1A2B4C] hover:text-[#F05A28] transition line-clamp-1">
-                          <Link href={`/product/${product.slug}`}>
-                            {product.name}
-                          </Link>
-                        </h3>
-                        <p className={`text-gray-600 ${viewMode === 'list' ? 'text-sm' : 'text-sm mt-1 line-clamp-2'}`}>
-                          {product.description}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-1">SKU: {product.sku}</p>
-                      </div>
-                      {viewMode === 'grid' && (
-                        <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${
-                          product.stock === 'In Stock' ? 'bg-green-100 text-green-700' : 
-                          product.stock === 'Pre-order' ? 'bg-yellow-100 text-yellow-700' :
-                          'bg-red-100 text-red-700'
-                        }`}>
-                          {product.stock}
+                      {product.featured && (
+                        <span className="absolute top-2 right-2 text-xs bg-[#F05A28] text-white px-2 py-1 rounded-full">
+                          ★ Featured
                         </span>
                       )}
                     </div>
 
+                    {/* Product Info */}
                     <div className={`${
-                      viewMode === 'list' ? 'flex items-center justify-between mt-3' : 'mt-4 flex items-center justify-between'
+                      viewMode === 'list' ? 'flex-1' : 'p-4'
                     }`}>
-                      <div>
-                        <span className="text-lg font-bold text-[#1A2B4C]">{product.price}</span>
-                        <span className="text-xs text-gray-400 ml-1">/{product.unit}</span>
-                        {viewMode === 'list' && (
-                          <p className={`text-xs mt-1 ${
-                            product.stock === 'In Stock' ? 'text-green-700' : 
-                            product.stock === 'Pre-order' ? 'text-yellow-700' : 'text-red-700'
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-[#1A2B4C] group-hover:text-[#F05A28] transition line-clamp-1">
+                            {product.name}
+                          </h3>
+                          <p className={`text-gray-600 ${viewMode === 'list' ? 'text-sm' : 'text-sm mt-1 line-clamp-2'}`}>
+                            {product.description}
+                          </p>
+                          <p className="text-xs text-gray-400 mt-1">SKU: {product.sku}</p>
+                        </div>
+                        {viewMode === 'grid' && (
+                          <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${
+                            product.stock === 'In Stock' ? 'bg-green-100 text-green-700' : 
+                            product.stock === 'Pre-order' ? 'bg-yellow-100 text-yellow-700' :
+                            'bg-red-100 text-red-700'
                           }`}>
                             {product.stock}
-                          </p>
+                          </span>
                         )}
                       </div>
-                      <button
-                        onClick={() => handleAddToQuote(product)}
-                        className="bg-[#F05A28] hover:bg-[#d94a1e] text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-md hover:shadow-lg flex items-center gap-1"
-                      >
-                        <ShoppingCart className="w-4 h-4" /> Add to Quote
-                      </button>
+
+                      <div className={`${
+                        viewMode === 'list' ? 'flex items-center justify-between mt-3' : 'mt-4 flex items-center justify-between'
+                      }`}>
+                        <div>
+                          <span className="text-lg font-bold text-[#1A2B4C]">{product.price}</span>
+                          <span className="text-xs text-gray-400 ml-1">/{product.unit}</span>
+                          {viewMode === 'list' && (
+                            <p className={`text-xs mt-1 ${
+                              product.stock === 'In Stock' ? 'text-green-700' : 
+                              product.stock === 'Pre-order' ? 'text-yellow-700' : 'text-red-700'
+                            }`}>
+                              {product.stock}
+                            </p>
+                          )}
+                        </div>
+                        <div className="flex gap-2">
+                          <span className="bg-[#F05A28] hover:bg-[#d94a1e] text-white px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1">
+                            <Eye className="w-4 h-4" /> View
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 </motion.div>
               ))}
             </div>
