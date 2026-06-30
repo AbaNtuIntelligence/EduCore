@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { 
   PenTool, 
   Sofa, 
@@ -10,18 +9,17 @@ import {
   Truck, 
   Shield,
   ArrowRight,
-  Building2,
   Clock,
-  Star,
   Heart
 } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import SectionTitle from '@/components/ui/SectionTitle';
 import Link from 'next/link';
+import ClientImage from '@/components/ui/ClientImage';
 
 export default function AboutPage() {
   const values = [
-    { icon: Award, title: 'Quality', description: 'Providing dependable products', image: 'https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=400&h=300&fit=crop&q=80' },
+    { icon: Award, title: 'Quality', description: 'Providing dependable products', image: 'https://i.imgur.com/nO0fg2g.jpeg' },
     { icon: Users, title: 'Integrity', description: 'Building trust with clients and partners', image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&h=300&fit=crop&q=80' },
     { icon: Truck, title: 'Reliability', description: 'Delivering on commitments', image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop&q=80' },
     { icon: Shield, title: 'Customer Focus', description: 'Understanding and meeting client needs', image: 'https://images.unsplash.com/photo-1552581234-26160f608093?w=400&h=300&fit=crop&q=80' },
@@ -35,15 +33,15 @@ export default function AboutPage() {
   ];
 
   const products = [
-    { icon: PenTool, label: 'Stationery', image: 'https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=400&h=300&fit=crop&q=80' },
-    { icon: Sofa, label: 'Furniture', image: 'https://images.unsplash.com/photo-1584473457406-6240486418e9?w=400&h=300&fit=crop&q=80' },
-    { icon: HardHat, label: 'PPE', image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&h=300&fit=crop&q=80' },
-    { icon: Sparkles, label: 'Hygiene', image: 'https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400&h=300&fit=crop&q=80' },
+    { icon: PenTool, label: 'Stationery', image: 'https://i.imgur.com/q5qUaQT.jpeg' },
+    { icon: Sofa, label: 'Furniture', image: 'https://i.imgur.com/wOyKRAu.jpeg' },
+    { icon: HardHat, label: 'PPE', image: 'https://i.imgur.com/48bu7cJ.png' },
+    { icon: Sparkles, label: 'Hygiene', image: 'https://i.imgur.com/eehi1Bf.jpeg' },
   ];
 
   return (
     <div className="bg-white">
-      {/* Hero Section with Image */}
+      {/* Hero Section */}
       <section className="relative overflow-hidden min-h-[60vh] flex items-center">
         <div 
           className="absolute inset-0 z-0"
@@ -106,7 +104,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* Who We Are with Image */}
+      {/* Who We Are with Images */}
       <section className="py-20">
         <Container>
           <div className="grid gap-12 md:grid-cols-2 items-center">
@@ -146,10 +144,11 @@ export default function AboutPage() {
                   const Icon = item.icon;
                   return (
                     <div key={item.label} className="relative group overflow-hidden rounded-xl">
-                      <img
+                      <ClientImage
                         src={item.image}
                         alt={item.label}
                         className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                        fallbackSrc={`https://placehold.co/400x300/1A2B4C/FFFFFF?text=${item.label}`}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#1A2B4C]/80 via-transparent to-transparent" />
                       <div className="absolute bottom-4 left-4 right-4">
@@ -180,10 +179,11 @@ export default function AboutPage() {
               return (
                 <div key={index} className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
                   <div className="h-40 overflow-hidden">
-                    <img
+                    <ClientImage
                       src={value.image}
                       alt={value.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      fallbackSrc={`https://placehold.co/400x300/1A2B4C/FFFFFF?text=${value.title}`}
                     />
                   </div>
                   <div className="p-6">
@@ -200,12 +200,12 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* Mission & Vision with Image */}
+      {/* Mission & Vision */}
       <section className="py-20">
         <Container>
           <div className="grid gap-8 md:grid-cols-2">
             <div className="relative overflow-hidden rounded-2xl min-h-[300px]">
-              <img
+              <ClientImage
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop&q=80"
                 alt="Team working"
                 className="w-full h-full object-cover"
@@ -220,7 +220,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="relative overflow-hidden rounded-2xl min-h-[300px]">
-              <img
+              <ClientImage
                 src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=600&fit=crop&q=80"
                 alt="Vision"
                 className="w-full h-full object-cover"
