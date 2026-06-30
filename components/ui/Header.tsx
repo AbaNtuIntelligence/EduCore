@@ -27,6 +27,9 @@ export default function Header() {
     setMounted(true);
   }, []);
 
+  // Don't show admin section until we know auth status
+  const showAdmin = !loading && isAuthenticated;
+
   return (
     <>
       {/* Top Bar */}
@@ -53,8 +56,8 @@ export default function Header() {
                 <Download className="w-4 h-4" /> Download Catalogue (PDF)
               </Link>
 
-              {/* Admin Section - Only icon on hover when authenticated */}
-              {!loading && isAuthenticated && (
+              {/* Admin Section - Only show when authenticated */}
+              {showAdmin && (
                 <>
                   <span className="text-gray-400">|</span>
                   <div className="relative group">
@@ -82,7 +85,7 @@ export default function Header() {
                 </>
               )}
 
-              {/* Admin Login link when not authenticated */}
+              {/* Show login link when not authenticated */}
               {!loading && !isAuthenticated && (
                 <>
                   <span className="text-gray-400">|</span>
@@ -173,7 +176,7 @@ export default function Header() {
                 📄 PDF Catalogue
               </Link>
               <div className="border-t border-gray-200 my-2"></div>
-              {!loading && isAuthenticated ? (
+              {showAdmin ? (
                 <>
                   <Link href="/admin" className="block text-[#F05A28] hover:text-[#d94a1e] transition font-medium">
                     <LayoutDashboard className="w-4 h-4 inline mr-2" /> Dashboard

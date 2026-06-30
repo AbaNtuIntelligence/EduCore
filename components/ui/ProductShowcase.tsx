@@ -132,7 +132,6 @@ export default function ProductShowcase() {
     const end = start + itemsPerView;
     const visible = filteredProducts.slice(start, end);
     
-    // If we don't have enough items, pad with items from the beginning
     if (visible.length < itemsPerView) {
       const remaining = itemsPerView - visible.length;
       return [...visible, ...filteredProducts.slice(0, remaining)];
@@ -167,7 +166,6 @@ export default function ProductShowcase() {
           subtitle="Explore our premium range of products"
         />
         
-        {/* Category Tabs */}
         <div className="mt-8 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => setActiveCategory('all')}
@@ -198,9 +196,7 @@ export default function ProductShowcase() {
           })}
         </div>
 
-        {/* Carousel */}
         <div className="mt-12 relative" ref={carouselRef}>
-          {/* Navigation Arrows */}
           {filteredProducts.length > itemsPerView && (
             <>
               <button
@@ -220,7 +216,6 @@ export default function ProductShowcase() {
             </>
           )}
 
-          {/* Auto-play Controls */}
           <div className="absolute top-0 right-0 z-10 flex gap-2">
             <button
               onClick={() => setIsPlaying(!isPlaying)}
@@ -231,7 +226,6 @@ export default function ProductShowcase() {
             </button>
           </div>
 
-          {/* Products Grid */}
           <div className="overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
@@ -243,11 +237,11 @@ export default function ProductShowcase() {
                 className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
               >
                 {visibleProducts.map((product, index) => (
-                  <div
+                  <Link
                     key={`${product.id}-${index}`}
-                    className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
+                    href={`/product/${product.slug}`}
+                    className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 block cursor-pointer"
                   >
-                    {/* Product Image */}
                     <div className="aspect-square bg-gray-100 relative overflow-hidden">
                       {product.image && product.image.startsWith('http') ? (
                         <img
@@ -273,12 +267,9 @@ export default function ProductShowcase() {
                       </span>
                     </div>
 
-                    {/* Product Info */}
                     <div className="p-4">
-                      <h3 className="font-semibold text-[#1A2B4C] hover:text-[#F05A28] transition line-clamp-1">
-                        <Link href={`/product/${product.slug}`}>
-                          {product.name}
-                        </Link>
+                      <h3 className="font-semibold text-[#1A2B4C] group-hover:text-[#F05A28] transition line-clamp-1">
+                        {product.name}
                       </h3>
                       <p className="text-sm text-gray-600 mt-1 line-clamp-2">
                         {product.description}
@@ -296,30 +287,18 @@ export default function ProductShowcase() {
                           {product.stock}
                         </span>
                       </div>
-                      <div className="mt-3 flex gap-2">
-                        <Link
-                          href={`/product/${product.slug}`}
-                          className="flex-1 text-center bg-gray-100 hover:bg-gray-200 text-[#1A2B4C] px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center justify-center gap-1"
-                        >
-                          <Eye className="w-4 h-4" /> View
-                        </Link>
-                        <button
-                          onClick={() => {
-                            console.log('Added to quote:', product.name);
-                          }}
-                          className="flex-1 bg-[#F05A28] hover:bg-[#d94a1e] text-white px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center justify-center gap-1"
-                        >
-                          <ShoppingCart className="w-4 h-4" /> Quote
-                        </button>
+                      <div className="mt-3">
+                        <span className="w-full text-center block bg-[#F05A28] hover:bg-[#d94a1e] text-white px-3 py-1.5 rounded-lg text-sm font-medium transition">
+                          View Details
+                        </span>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </motion.div>
             </AnimatePresence>
           </div>
 
-          {/* Dots Indicator */}
           {filteredProducts.length > itemsPerView && (
             <div className="flex justify-center gap-2 mt-6">
               {Array.from({ length: Math.ceil(filteredProducts.length / itemsPerView) }).map((_, index) => (
@@ -338,7 +317,6 @@ export default function ProductShowcase() {
           )}
         </div>
 
-        {/* View All Button */}
         <div className="text-center mt-12">
           <Link
             href="/catalogue"

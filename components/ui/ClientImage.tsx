@@ -13,7 +13,7 @@ export default function ClientImage({
   src, 
   alt, 
   className = '',
-  fallbackSrc = 'https://placehold.co/800x600/1A2B4C/FFFFFF?text=Image'
+  fallbackSrc = 'https://placehold.co/600x600/1A2B4C/FFFFFF?text=📦'
 }: ClientImageProps) {
   const [imgSrc, setImgSrc] = useState(src);
   const [hasError, setHasError] = useState(false);
