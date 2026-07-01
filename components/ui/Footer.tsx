@@ -1,7 +1,6 @@
 "use client";
 
 import Link from 'next/link';
-import { useState } from 'react';
 import { 
   Phone, 
   Mail, 
@@ -14,7 +13,13 @@ import Container from './Container';
 
 export default function Footer() {
   const { isAuthenticated, loading } = useAuth();
-  const [imgError, setImgError] = useState(false);
+
+  const socialLinks = [
+    { name: 'Facebook', href: 'https://facebook.com/educore', display: 'f' },
+    { name: 'LinkedIn', href: 'https://linkedin.com/company/educore', display: 'in' },
+    { name: 'Instagram', href: 'https://instagram.com/educore', display: 'ig' },
+    { name: 'YouTube', href: 'https://youtube.com/educore', display: 'yt' },
+  ];
 
   return (
     <footer className="bg-[#1A2B4C] text-white border-t border-white/10">
@@ -76,18 +81,18 @@ export default function Footer() {
           <div>
             <h4 className="mb-4 text-lg font-semibold text-white">Connect With Us</h4>
             <div className="flex space-x-3">
-              <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-[#F05A28] transition font-bold text-sm">
-                f
-              </a>
-              <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-[#F05A28] transition font-bold text-sm">
-                in
-              </a>
-              <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-[#F05A28] transition font-bold text-sm">
-                ig
-              </a>
-              <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-[#F05A28] transition font-bold text-sm">
-                yt
-              </a>
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-[#F05A28] transition font-bold text-sm"
+                  aria-label={`Follow us on ${social.name}`}
+                >
+                  {social.display}
+                </a>
+              ))}
             </div>
             <div className="mt-6 border-t border-white/10 pt-4 text-xs text-gray-400">
               <p>&copy; 2026 EDUCORE STATIONERY AND HYGIENE SUPPLIES (PTY) LTD</p>
@@ -101,23 +106,13 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Company Signature - AbaNtu Intelligence */}
+        {/* Company Signature */}
         <div className="mt-8 pt-6 border-t border-white/10">
           <div className="flex flex-col items-center justify-center gap-2 text-center">
             <div className="flex items-center gap-3">
-              {/* Logo with fallback */}
-              {!imgError ? (
-                <img 
-                  src="https://i.imgur.com/2hvvFsN.png" 
-                  alt="AbaNtu Intelligence" 
-                  className="w-10 h-10 object-contain rounded-full"
-                  onError={() => setImgError(true)}
-                />
-              ) : (
-                <div className="w-10 h-10 rounded-full bg-[#F05A28]/20 flex items-center justify-center">
-                  <span className="text-[#F05A28] font-bold text-sm">AI</span>
-                </div>
-              )}
+              <div className="w-8 h-8 rounded-full bg-[#F05A28]/20 flex items-center justify-center">
+                <span className="text-[#F05A28] font-bold text-sm">AI</span>
+              </div>
               <span className="text-sm text-gray-400">
                 Powered by <span className="text-[#F05A28] font-semibold">AbaNtu Intelligence</span>
               </span>
