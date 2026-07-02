@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useQuoteStore } from '@/store/quoteStore';
 import Image from 'next/image';
 import Link from 'next/link';
-import { X, Minus, Plus, Trash2 } from 'lucide-react';
+import { X, Minus, Plus, Trash2, ShoppingCart } from 'lucide-react';
 
 interface QuoteDrawerProps {
   isOpen: boolean;
@@ -21,7 +21,6 @@ export default function QuoteDrawer({ isOpen, onClose }: QuoteDrawerProps) {
     setMounted(true);
   }, []);
 
-  // Don't render anything until mounted (client-side)
   if (!mounted) return null;
 
   return (
@@ -43,7 +42,9 @@ export default function QuoteDrawer({ isOpen, onClose }: QuoteDrawerProps) {
         {/* Header */}
         <div className="flex items-center justify-between border-b p-4 bg-[#1A2B4C] text-white rounded-tl-2xl">
           <div>
-            <h2 className="text-xl font-bold">Your Quote</h2>
+            <h2 className="text-xl font-bold flex items-center gap-2">
+              <ShoppingCart className="w-5 h-5" /> Your Quote
+            </h2>
             <p className="text-sm text-gray-300">{totalItems} items</p>
           </div>
           <button
@@ -78,7 +79,7 @@ export default function QuoteDrawer({ isOpen, onClose }: QuoteDrawerProps) {
                 >
                   {/* Image */}
                   <div className="w-20 h-20 bg-gray-200 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden">
-                    {item.image ? (
+                    {item.image && item.image.startsWith('http') ? (
                       <img
                         src={item.image}
                         alt={item.name}
@@ -141,15 +142,13 @@ export default function QuoteDrawer({ isOpen, onClose }: QuoteDrawerProps) {
                 <span className="text-gray-600">Subtotal</span>
                 <span className="font-bold text-[#1A2B4C] text-lg">{subtotal}</span>
               </div>
-              <button
-                onClick={() => {
-                  onClose();
-                  window.location.href = '/request-quote';
-                }}
-                className="w-full bg-[#F05A28] hover:bg-[#d94a1e] text-white py-3 rounded-lg font-semibold transition shadow-lg shadow-[#F05A28]/30"
+              <Link
+                href="/request-quote"
+                onClick={onClose}
+                className="w-full bg-[#F05A28] hover:bg-[#d94a1e] text-white py-3 rounded-lg font-semibold transition shadow-lg shadow-[#F05A28]/30 flex items-center justify-center gap-2"
               >
                 Request Quote
-              </button>
+              </Link>
               <button
                 onClick={clearQuote}
                 className="w-full mt-2 text-gray-500 hover:text-red-500 text-sm transition"

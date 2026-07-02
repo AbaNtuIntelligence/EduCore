@@ -84,49 +84,66 @@ export default function AdminPage() {
     formDataObj.append('featured', String(formData.featured));
     formDataObj.append('imageUrl', formData.imageUrl);
     
-    // Always use /api/products with PUT method
-    const url = '/api/products';
-    const method = 'PUT';
+    // ✅ Determine if this is a new product or editing
+    const isNewProduct = !editingProduct || !editingProduct.id;
     
-    // If editing, add the ID to the form data
-    if (editingProduct) {
+    if (!isNewProduct) {
       formDataObj.append('id', String(editingProduct.id));
+      console.log('✅ Editing product ID:', editingProduct.id);
+    } else {
+      console.log('✅ Adding new product (no ID)');
     }
-    
-    console.log('Sending request to:', url);
-    console.log('Method:', method);
-    console.log('Product ID:', editingProduct?.id || 'New');
-    
+
     try {
+      // ✅ Use POST for new products, PUT for updates
+      const url = '/api/products';
+      const method = isNewProduct ? 'POST' : 'PUT';
+      
+      console.log('📤 Sending request to:', url);
+      console.log('📦 Method:', method);
+      console.log('🆔 Is new product:', isNewProduct);
+      
       const res = await fetch(url, {
         method,
         body: formDataObj,
       });
       
       const responseText = await res.text();
-      console.log('Response status:', res.status);
-      console.log('Raw response:', responseText);
+      console.log('📨 Response status:', res.status);
       
       let result;
       try {
         result = JSON.parse(responseText);
       } catch (parseError) {
-        console.error('Failed to parse JSON:', parseError);
+        console.error('❌ Failed to parse JSON:', parseError);
         alert('Server error: ' + responseText.substring(0, 200));
         return;
       }
       
       if (res.ok) {
-        console.log('Save successful:', result);
+        console.log('✅ Save successful:', result);
         await fetchProducts();
         setShowModal(false);
-        resetForm();
+        // Reset form after successful save
+        setEditingProduct(null);
+        setFormData({
+          name: '',
+          category: '',
+          description: '',
+          features: '',
+          price: '',
+          unit: '',
+          sku: '',
+          stock: 'In Stock',
+          featured: false,
+          imageUrl: '',
+        });
       } else {
-        console.error('Save error:', result);
+        console.error('❌ Save error:', result);
         alert('Error saving product: ' + (result.error || result.message || 'Unknown error'));
       }
     } catch (error) {
-      console.error('Fetch error:', error);
+      console.error('❌ Fetch error:', error);
       alert('Network error: ' + (error as Error).message);
     }
   };
@@ -148,7 +165,7 @@ export default function AdminPage() {
   };
 
   const handleEdit = (product: Product) => {
-    console.log('Editing product:', product);
+    console.log('✏️ Editing product:', product);
     setEditingProduct(product);
     setFormData({
       name: product.name,
@@ -165,7 +182,9 @@ export default function AdminPage() {
     setShowModal(true);
   };
 
-  const resetForm = () => {
+  const openAddModal = () => {
+    console.log('➕ Opening add product modal');
+    // Reset form and ensure editingProduct is null
     setEditingProduct(null);
     setFormData({
       name: '',
@@ -179,6 +198,12 @@ export default function AdminPage() {
       featured: false,
       imageUrl: '',
     });
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    // Don't reset editingProduct here to keep state
   };
 
   const filteredProducts = products.filter(p =>
@@ -205,10 +230,7 @@ export default function AdminPage() {
           </div>
           <div className="flex gap-4">
             <button
-              onClick={() => {
-                resetForm();
-                setShowModal(true);
-              }}
+              onClick={openAddModal}
               className="flex items-center gap-2 bg-[#F05A28] hover:bg-[#d94a1e] text-white px-6 py-3 rounded-lg font-semibold transition"
             >
               <Plus size={20} /> Add Product
@@ -333,7 +355,7 @@ export default function AdminPage() {
                 {editingProduct ? 'Edit Product' : 'Add New Product'}
               </h2>
               <button
-                onClick={() => setShowModal(false)}
+                onClick={closeModal}
                 className="p-2 hover:bg-gray-100 rounded-lg transition"
               >
                 <X size={24} />
@@ -360,6 +382,19 @@ export default function AdminPage() {
                       className="w-20 h-20 object-cover rounded-lg border border-gray-200"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = 'https://placehold.co/80x80/1A2B4C/FFFFFF?text=Invalid+URL';
+                      }}
+                    />
+                  </div>
+                )}
+                {editingProduct?.image && !formData.imageUrl && (
+                  <div className="mt-2">
+                    <p className="text-xs text-gray-500">Current image:</p>
+                    <img 
+                      src={editingProduct.image} 
+                      alt="Current product" 
+                      className="w-20 h-20 object-cover rounded-lg mt-1"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://placehold.co/80x80/1A2B4C/FFFFFF?text=📦';
                       }}
                     />
                   </div>
@@ -484,7 +519,7 @@ export default function AdminPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setShowModal(false)}
+                  onClick={closeModal}
                   className="flex-1 border border-gray-300 hover:bg-gray-50 text-gray-700 px-6 py-3 rounded-lg font-semibold transition"
                 >
                   Cancel

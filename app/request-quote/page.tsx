@@ -4,10 +4,28 @@ import { useState, useEffect } from 'react';
 import { useQuoteStore } from '@/store/quoteStore';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, Trash2, Minus, Plus, Send } from 'lucide-react';
+import { 
+  ArrowLeft, 
+  Trash2, 
+  Minus, 
+  Plus, 
+  Send,
+  ShoppingCart,
+  X
+} from 'lucide-react';
+import Container from '@/components/ui/Container';
 
 export default function RequestQuotePage() {
-  const { items, removeItem, updateQuantity, getTotalItems, getSubtotal, clearQuote } = useQuoteStore();
+  const { 
+    items, 
+    removeItem, 
+    updateQuantity, 
+    getTotalItems, 
+    getSubtotal, 
+    clearQuote,
+    getItemCount
+  } = useQuoteStore();
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
@@ -22,20 +40,20 @@ export default function RequestQuotePage() {
 
   const totalItems = getTotalItems();
   const subtotal = getSubtotal();
+  const itemCount = getItemCount();
 
   // Redirect if quote is empty
   useEffect(() => {
-    if (totalItems === 0 && !isSuccess) {
+    if (itemCount === 0 && !isSuccess) {
       // Don't redirect immediately, let user see empty state
     }
-  }, [totalItems]);
+  }, [itemCount, isSuccess]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // Prepare quote data
       const quoteData = {
         ...formData,
         items: items.map(item => ({
@@ -49,7 +67,6 @@ export default function RequestQuotePage() {
         totalItems: totalItems,
       };
 
-      // Send to API
       const response = await fetch('/api/send-quote', {
         method: 'POST',
         headers: {
@@ -61,7 +78,6 @@ export default function RequestQuotePage() {
       if (response.ok) {
         setIsSuccess(true);
         clearQuote();
-        // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         throw new Error('Failed to send quote');
@@ -122,7 +138,7 @@ export default function RequestQuotePage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4">
+      <Container>
         {/* Header */}
         <div className="mb-8">
           <Link href="/catalogue" className="inline-flex items-center gap-2 text-[#1A2B4C] hover:text-[#F05A28] transition">
@@ -136,7 +152,9 @@ export default function RequestQuotePage() {
           {/* Quote Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-sm p-6 sticky top-24">
-              <h3 className="font-semibold text-[#1A2B4C] text-lg mb-4">Quote Summary</h3>
+              <h3 className="font-semibold text-[#1A2B4C] text-lg mb-4 flex items-center gap-2">
+                <ShoppingCart className="w-5 h-5" /> Quote Summary
+              </h3>
               
               {items.length === 0 ? (
                 <div className="text-center py-8">
@@ -154,14 +172,15 @@ export default function RequestQuotePage() {
                   <div className="space-y-3 max-h-96 overflow-y-auto">
                     {items.map((item) => (
                       <div key={item.id} className="flex gap-3 p-2 bg-gray-50 rounded-lg">
-                        <div className="w-12 h-12 bg-gray-200 rounded flex-shrink-0 flex items-center justify-center">
-                          {item.image ? (
-                            <Image
+                        <div className="w-12 h-12 bg-gray-200 rounded flex-shrink-0 flex items-center justify-center overflow-hidden">
+                          {item.image && item.image.startsWith('http') ? (
+                            <img
                               src={item.image}
                               alt={item.name}
-                              width={48}
-                              height={48}
-                              className="object-cover rounded"
+                              className="w-12 h-12 object-cover"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src = 'https://placehold.co/48x48/1A2B4C/FFFFFF?text=📦';
+                              }}
                             />
                           ) : (
                             <span className="text-xl">📦</span>
@@ -349,7 +368,7 @@ export default function RequestQuotePage() {
             </form>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

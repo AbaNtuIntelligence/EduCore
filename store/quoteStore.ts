@@ -20,12 +20,14 @@ interface QuoteStore {
   clearQuote: () => void;
   getTotalItems: () => number;
   getSubtotal: () => string;
+  getItemCount: () => number;
 }
 
 export const useQuoteStore = create<QuoteStore>()(
   persist(
     (set, get) => ({
       items: [],
+
       addItem: (product, quantity) => {
         set((state) => {
           const existingItem = state.items.find(item => item.id === product.id);
@@ -52,11 +54,13 @@ export const useQuoteStore = create<QuoteStore>()(
           };
         });
       },
+
       removeItem: (id) => {
         set((state) => ({
           items: state.items.filter(item => item.id !== id),
         }));
       },
+
       updateQuantity: (id, quantity) => {
         if (quantity <= 0) {
           set((state) => ({
@@ -70,10 +74,17 @@ export const useQuoteStore = create<QuoteStore>()(
           ),
         }));
       },
+
       clearQuote: () => set({ items: [] }),
+
       getTotalItems: () => {
         return get().items.reduce((total, item) => total + item.quantity, 0);
       },
+
+      getItemCount: () => {
+        return get().items.length;
+      },
+
       getSubtotal: () => {
         const total = get().items.reduce((sum, item) => {
           const price = parseFloat(item.price.replace(/[^0-9.]/g, ''));

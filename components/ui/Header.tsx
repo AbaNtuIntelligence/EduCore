@@ -15,6 +15,8 @@ import { useQuoteStore } from '@/store/quoteStore';
 import { useAuth } from '@/lib/useAuth';
 import QuoteDrawer from './QuoteDrawer';
 import Container from './Container';
+import SocialIcons from './SocialIcons';
+import ContactIcons from './ContactIcons';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,7 +29,6 @@ export default function Header() {
     setMounted(true);
   }, []);
 
-  // Don't show admin section until we know auth status
   const showAdmin = !loading && isAuthenticated;
 
   return (
@@ -37,37 +38,36 @@ export default function Header() {
         <Container className="py-2">
           <div className="flex items-center justify-between">
             <span className="text-sm">Your Trusted Partner for Stationery, PPE & Hygiene Solutions</span>
-            <div className="flex items-center space-x-4">
-              {/* Social Icons */}
-              <div className="flex items-center space-x-3">
-                <a href="#" className="hover:text-[#F05A28] transition font-bold text-sm">f</a>
-                <a href="#" className="hover:text-[#F05A28] transition font-bold text-sm">in</a>
-                <a href="#" className="hover:text-[#F05A28] transition font-bold text-sm">ig</a>
-                <a href="#" className="hover:text-[#F05A28] transition font-bold text-sm">yt</a>
-              </div>
+            
+            <div className="flex items-center gap-4">
+              <ContactIcons />
               
-              <span className="text-gray-400">|</span>
+              <span className="text-gray-600">|</span>
+              
+              <SocialIcons />
+              
+              <span className="text-gray-600">|</span>
               
               <Link
                 href="/pdf-catalogue"
                 target="_blank"
-                className="flex items-center gap-2 text-sm hover:text-[#F05A28] transition"
+                className="flex items-center gap-1.5 text-sm hover:text-[#F05A28] transition"
               >
-                <Download className="w-4 h-4" /> Download Catalogue (PDF)
+                <Download className="w-4 h-4" /> 
+                <span className="hidden xl:inline">Catalogue</span>
               </Link>
 
-              {/* Admin Section - Only show when authenticated */}
               {showAdmin && (
                 <>
-                  <span className="text-gray-400">|</span>
+                  <span className="text-gray-600">|</span>
                   <div className="relative group">
                     <span className="text-gray-400 hover:text-[#F05A28] transition cursor-pointer">
-                      <LayoutDashboard className="w-5 h-5" />
+                      <LayoutDashboard className="w-4 h-4" />
                     </span>
                     <div className="absolute right-0 top-full mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[9999]">
                       <div className="bg-[#1A2B4C] border border-white/10 rounded-lg shadow-2xl p-2 min-w-[160px]">
                         <Link href="/admin" className="block px-4 py-2 text-sm text-gray-300 hover:text-[#F05A28] hover:bg-white/5 rounded transition whitespace-nowrap">
-                          <LayoutDashboard className="w-4 h-4 inline mr-2" /> Admin Dashboard
+                          <LayoutDashboard className="w-4 h-4 inline mr-2" /> Dashboard
                         </Link>
                         <div className="border-t border-white/10 my-1"></div>
                         <button
@@ -85,12 +85,11 @@ export default function Header() {
                 </>
               )}
 
-              {/* Show login link when not authenticated */}
               {!loading && !isAuthenticated && (
                 <>
-                  <span className="text-gray-400">|</span>
+                  <span className="text-gray-600">|</span>
                   <Link href="/admin/login" className="text-sm text-gray-400 hover:text-[#F05A28] transition flex items-center gap-1">
-                    <User className="w-4 h-4" /> Admin Login
+                    <User className="w-4 h-4" /> Login
                   </Link>
                 </>
               )}
@@ -122,11 +121,11 @@ export default function Header() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#F05A28] transition-all group-hover:w-full"></span>
               </Link>
               <Link href="/about" className="text-sm font-medium text-[#1A2B4C] hover:text-[#F05A28] transition relative group">
-                About Us
+                About
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#F05A28] transition-all group-hover:w-full"></span>
               </Link>
               <Link href="/tender-support" className="text-sm font-medium text-[#1A2B4C] hover:text-[#F05A28] transition relative group">
-                Tender Support
+                Tenders
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#F05A28] transition-all group-hover:w-full"></span>
               </Link>
               <Link href="/contact" className="text-sm font-medium text-[#1A2B4C] hover:text-[#F05A28] transition relative group">
@@ -163,14 +162,13 @@ export default function Header() {
           </div>
         </Container>
 
-        {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden border-t bg-white shadow-lg">
             <Container className="py-4 space-y-3">
               <Link href="/" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">Home</Link>
               <Link href="/catalogue" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">Catalogue</Link>
-              <Link href="/about" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">About Us</Link>
-              <Link href="/tender-support" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">Tender Support</Link>
+              <Link href="/about" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">About</Link>
+              <Link href="/tender-support" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">Tenders</Link>
               <Link href="/contact" className="block text-[#1A2B4C] hover:text-[#F05A28] transition font-medium">Contact</Link>
               <Link href="/pdf-catalogue" target="_blank" className="block text-[#F05A28] hover:text-[#d94a1e] transition font-medium">
                 📄 PDF Catalogue
@@ -193,7 +191,7 @@ export default function Header() {
                 </>
               ) : (
                 <Link href="/admin/login" className="block text-[#F05A28] hover:text-[#d94a1e] transition font-medium">
-                  <User className="w-4 h-4 inline mr-2" /> Admin Login
+                  <User className="w-4 h-4 inline mr-2" /> Login
                 </Link>
               )}
               <Link href="/request-quote" className="block rounded-lg bg-[#F05A28] px-4 py-3 text-center text-white hover:bg-[#d94a1e] transition font-semibold">

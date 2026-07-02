@@ -208,23 +208,39 @@
       "sku": "EDU-HYG-092",
       "featured": true,
       "stock": "In Stock"
+    },
+    {
+      "id": 13,
+      "name": "Classic Eames High Back-Cushion",
+      "slug": "classic-eames-high-back-cushion",
+      "category": "furniture",
+      "description": "Classic Eames high back with cushion specifications:\r\n\r\nTortion tilt mechanism with stabilizing bar for extra strength\r\nGas height adjustment\r\nStylish chrome arms\r\nChrome pyramid base\r\nMax user weight: 130kg",
+      "features": [
+        "A variation of the Classic Eames high back chair including more cushioning, maximising comfort with a minimalistic appearance. Adds a touch of class to any modern office or boardroom."
+      ],
+      "price": "5495.00",
+      "unit": "each",
+      "image": "https://i.imgur.com/aKZkxFp.jpeg",
+      "sku": "cha001",
+      "featured": true,
+      "stock": "In Stock"
     }
   ],
   "categories": [
     {
       "id": "all",
       "name": "All Products",
-      "count": 13
+      "count": 12
     },
     {
       "id": "stationery",
       "name": "Stationery",
-      "count": 4
+      "count": 2
     },
     {
       "id": "furniture",
       "name": "Office Furniture",
-      "count": 3
+      "count": 4
     },
     {
       "id": "ppe",

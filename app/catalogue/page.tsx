@@ -14,7 +14,8 @@ import {
   ArrowRight,
   ShoppingCart,
   CheckCircle,
-  Eye
+  Eye,
+  Plus
 } from 'lucide-react';
 import { useQuoteStore } from '@/store/quoteStore';
 import Container from '@/components/ui/Container';
@@ -49,7 +50,8 @@ export default function CataloguePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [loading, setLoading] = useState(true);
-  const addToQuote = useQuoteStore((state) => state.addItem);
+  const { addItem, getTotalItems } = useQuoteStore();
+  const totalItems = getTotalItems();
 
   const heroImage = siteImages.hero[0] || 'https://images.unsplash.com/photo-1584473457406-6240486418e9?w=1920&h=1080&fit=crop&q=80';
 
@@ -89,8 +91,12 @@ export default function CataloguePage() {
     return filtered;
   }, [products, selectedCategory, searchQuery]);
 
-  const handleAddToQuote = (product: Product) => {
-    addToQuote(product, 1);
+  const handleAddToQuote = (product: Product, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem(product, 1);
+    console.log('Added to quote:', product.name);
+    alert(`✅ Added "${product.name}" to your quote!`);
   };
 
   if (loading) {
@@ -248,35 +254,34 @@ export default function CataloguePage() {
                   exit={{ opacity: 0, y: -20 }}
                   className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 overflow-hidden"
                 >
-                  <Link
-                    href={`/product/${product.slug}`}
-                    className="block"
-                  >
+                  <div className="block">
                     {/* Product Image */}
-                    <div className={`${
-                      viewMode === 'list' ? 'w-32 h-32 flex-shrink-0' : 'h-48 w-full'
-                    } bg-gray-100 flex items-center justify-center relative overflow-hidden`}>
-                      {product.image && product.image.startsWith('http') ? (
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = 'https://placehold.co/400x400/1A2B4C/FFFFFF?text=📦';
-                          }}
-                        />
-                      ) : (
-                        <span className="text-6xl">📦</span>
-                      )}
-                      <span className="absolute top-2 left-2 text-xs bg-[#1A2B4C]/80 text-white px-2 py-1 rounded-full backdrop-blur-sm capitalize">
-                        {product.category}
-                      </span>
-                      {product.featured && (
-                        <span className="absolute top-2 right-2 text-xs bg-[#F05A28] text-white px-2 py-1 rounded-full">
-                          ★ Featured
+                    <Link href={`/product/${product.slug}`}>
+                      <div className={`${
+                        viewMode === 'list' ? 'w-32 h-32 flex-shrink-0' : 'h-48 w-full'
+                      } bg-gray-100 flex items-center justify-center relative overflow-hidden`}>
+                        {product.image && product.image.startsWith('http') ? (
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = 'https://placehold.co/400x400/1A2B4C/FFFFFF?text=📦';
+                            }}
+                          />
+                        ) : (
+                          <span className="text-6xl">📦</span>
+                        )}
+                        <span className="absolute top-2 left-2 text-xs bg-[#1A2B4C]/80 text-white px-2 py-1 rounded-full backdrop-blur-sm capitalize">
+                          {product.category}
                         </span>
-                      )}
-                    </div>
+                        {product.featured && (
+                          <span className="absolute top-2 right-2 text-xs bg-[#F05A28] text-white px-2 py-1 rounded-full">
+                            ★ Featured
+                          </span>
+                        )}
+                      </div>
+                    </Link>
 
                     {/* Product Info */}
                     <div className={`${
@@ -284,9 +289,11 @@ export default function CataloguePage() {
                     }`}>
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <h3 className="font-semibold text-[#1A2B4C] group-hover:text-[#F05A28] transition line-clamp-1">
-                            {product.name}
-                          </h3>
+                          <Link href={`/product/${product.slug}`}>
+                            <h3 className="font-semibold text-[#1A2B4C] hover:text-[#F05A28] transition line-clamp-1">
+                              {product.name}
+                            </h3>
+                          </Link>
                           <p className={`text-gray-600 ${viewMode === 'list' ? 'text-sm' : 'text-sm mt-1 line-clamp-2'}`}>
                             {product.description}
                           </p>
@@ -319,13 +326,22 @@ export default function CataloguePage() {
                           )}
                         </div>
                         <div className="flex gap-2">
-                          <span className="bg-[#F05A28] hover:bg-[#d94a1e] text-white px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1">
+                          <button
+                            onClick={(e) => handleAddToQuote(product, e)}
+                            className="bg-[#F05A28] hover:bg-[#d94a1e] text-white px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1 shadow-md hover:shadow-lg"
+                          >
+                            <Plus className="w-4 h-4" /> Add to Quote
+                          </button>
+                          <Link
+                            href={`/product/${product.slug}`}
+                            className="bg-gray-100 hover:bg-gray-200 text-[#1A2B4C] px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1"
+                          >
                             <Eye className="w-4 h-4" /> View
-                          </span>
+                          </Link>
                         </div>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 </motion.div>
               ))}
             </div>
