@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronLeft, 
   ChevronRight, 
-  ShoppingCart,
   Star,
   Eye,
   Pause,
@@ -20,6 +19,7 @@ import {
 import { useQuoteStore } from '@/store/quoteStore';
 import Container from './Container';
 import SectionTitle from './SectionTitle';
+import { formatPriceCompact } from '@/lib/currency';
 
 interface Product {
   id: number;
@@ -292,7 +292,9 @@ export default function ProductShowcase() {
                       </p>
                       <div className="mt-3 flex items-center justify-between">
                         <div>
-                          <span className="text-lg font-bold text-[#1A2B4C]">{product.price}</span>
+                          <span className="text-lg font-bold text-[#1A2B4C]">
+                            {formatPriceCompact(product.price)}
+                          </span>
                           <span className="text-xs text-gray-400 ml-1">/{product.unit}</span>
                         </div>
                         <span className={`text-xs px-2 py-1 rounded-full ${
