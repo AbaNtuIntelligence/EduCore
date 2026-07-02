@@ -21,6 +21,7 @@ import { useQuoteStore } from '@/store/quoteStore';
 import Container from '@/components/ui/Container';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { siteImages } from '@/config/images';
+import { formatZAR, formatPriceCompact } from '@/lib/currency';
 
 interface Product {
   id: number;
@@ -314,7 +315,9 @@ export default function CataloguePage() {
                         viewMode === 'list' ? 'flex items-center justify-between mt-3' : 'mt-4 flex items-center justify-between'
                       }`}>
                         <div>
-                          <span className="text-lg font-bold text-[#1A2B4C]">{product.price}</span>
+                          <span className="text-lg font-bold text-[#1A2B4C]">
+                            {formatPriceCompact(product.price)}
+                          </span>
                           <span className="text-xs text-gray-400 ml-1">/{product.unit}</span>
                           {viewMode === 'list' && (
                             <p className={`text-xs mt-1 ${
