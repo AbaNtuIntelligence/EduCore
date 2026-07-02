@@ -1,5 +1,6 @@
-import fs from 'fs';
-import path from 'path';
+import { Redis } from '@upstash/redis';
+
+const redis = Redis.fromEnv();
 
 export interface Product {
   id: number;
@@ -16,34 +17,17 @@ export interface Product {
   stock: string;
 }
 
-export interface ProductData {
-  products: Product[];
-  categories: { id: string; name: string; count: number }[];
+async function getProductsData() {
+  const data = await redis.get('products');
+  return data ? JSON.parse(data as string) : { products: [], categories: [] };
 }
 
-export function getProducts(): ProductData {
-  try {
-    const dataPath = path.join(process.cwd(), 'data', 'products.json');
-    const data = fs.readFileSync(dataPath, 'utf8');
-    return JSON.parse(data);
-  } catch (error) {
-    console.error('Error reading products data:', error);
-    return { products: [], categories: [] };
-  }
+export async function getProducts() {
+  const data = await getProductsData();
+  return data;
 }
 
-export function getProductBySlug(slug: string): Product | undefined {
-  const { products } = getProducts();
-  return products.find(product => product.slug === slug);
-}
-
-export function getProductsByCategory(category: string): Product[] {
-  const { products } = getProducts();
-  if (category === 'all') return products;
-  return products.filter(product => product.category === category);
-}
-
-export function getFeaturedProducts(): Product[] {
-  const { products } = getProducts();
-  return products.filter(product => product.featured);
+export async function getProductBySlug(slug: string): Promise<Product | null> {
+  const data = await getProductsData();
+  return data.products.find((p: any) => p.slug === slug) || null;
 }

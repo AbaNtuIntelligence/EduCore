@@ -1,227 +1,18 @@
 {
   "products": [
     {
-      "id": 2,
-      "name": "Executive Office Desk - 1800mm",
-      "slug": "executive-office-desk-1800mm",
-      "category": "furniture",
-      "description": "Modern executive desk with sleek finish and built-in cable management. Spacious work surface for maximum productivity.",
-      "features": [
-        "1800mm x 900mm x 750mm\r",
-        "High-density MDF\r",
-        "Built-in cable management\r",
-        "5 colour options available"
-      ],
-      "price": "R 4,250.00",
-      "unit": "per unit",
-      "image": "https://i.imgur.com/wOyKRAu.jpeg",
-      "sku": "EDU-FUR-012",
-      "featured": true,
-      "stock": "In Stock"
-    },
-    {
-      "id": 3,
-      "name": "3-Ply Disposable Face Masks - Box of 50",
-      "slug": "3-ply-disposable-face-masks-box-of-50",
-      "category": "ppe",
-      "description": "High-quality disposable 3-ply face masks with elastic ear loops. Provides reliable protection against droplets and airborne particles.",
-      "features": [
-        "3-ply protection\r",
-        "Elastic ear loops\r",
-        "Breathable material\r",
-        "CE certified"
-      ],
-      "price": "R 125.00",
-      "unit": "per box",
-      "image": "https://i.imgur.com/3RA7yEI.png",
-      "sku": "EDU-PPE-003",
-      "featured": true,
-      "stock": "In Stock"
-    },
-    {
-      "id": 4,
-      "name": "Industrial Cleaning Chemical - 5L",
-      "slug": "industrial-cleaning-chemical-5l",
-      "category": "cleaning",
-      "description": "Multi-purpose industrial cleaning chemical effective on all hard surfaces. Concentrated formula for maximum value.",
-      "features": [
-        "Kills 99.9% of bacteria\r",
-        "Concentrated formula\r",
-        "Available in multiple fragrances\r",
-        "5L container"
-      ],
-      "price": "R 185.00",
-      "unit": "per 5L",
-      "image": "https://i.imgur.com/OBFFr7D.jpeg",
-      "sku": "EDU-CLN-005",
-      "featured": false,
-      "stock": "In Stock"
-    },
-    {
-      "id": 5,
-      "name": "Gel Pens - Box of 50",
-      "slug": "gel-pens-box-of-50",
-      "category": "stationery",
-      "description": "Smooth writing gel pens with vibrant ink. Perfect for office, school, and everyday use. Available in black, blue, and red.",
-      "features": [
-        "0.7mm tip\r",
-        "Vibrant ink colours\r",
-        "Comfortable grip\r",
-        "Long-lasting"
-      ],
-      "price": "R 95.00",
-      "unit": "per box of 50",
-      "image": "https://i.imgur.com/Z04403n.jpeg",
-      "sku": "EDU-PEN-023",
-      "featured": false,
-      "stock": "In Stock"
-    },
-    {
-      "id": 6,
-      "name": "Ergonomic Office Chair",
-      "slug": "ergonomic-office-chair",
-      "category": "furniture",
-      "description": "Premium ergonomic office chair with adjustable lumbar support and headrest. Designed for all-day comfort and productivity.",
-      "features": [
-        "Adjustable lumbar support\r",
-        "Height adjustment\r",
-        "Headrest included\r",
-        "Breathable mesh back"
-      ],
-      "price": "R 3,850.00",
-      "unit": "per unit",
-      "image": "https://i.imgur.com/nO0fg2g.jpeg",
-      "sku": "EDU-FUR-035",
-      "featured": true,
-      "stock": "In Stock"
-    },
-    {
-      "id": 7,
-      "name": "Hygiene Hand Sanitiser - 5L",
-      "slug": "hygiene-hand-sanitiser-5l",
-      "category": "cleaning",
-      "description": "High-strength alcohol-based hand sanitiser with moisturising agents. Kills 99.9% of germs and bacteria.",
-      "features": [
-        "70% alcohol\r",
-        "Moisturising formula\r",
-        "Available in 5L and 25L\r",
-        "Safe for frequent use"
-      ],
-      "price": "R 165.00",
-      "unit": "per 5L",
-      "image": "https://i.imgur.com/rvmz0cR.png",
-      "sku": "EDU-HYG-008",
-      "featured": true,
-      "stock": "In Stock"
-    },
-    {
-      "id": 8,
-      "name": "Safety Overalls - High Visibility",
-      "slug": "safety-overalls-high-visibility",
-      "category": "ppe",
-      "description": "High-visibility safety overalls with reflective stripes. Certified for workplace safety and comfort.",
-      "features": [
-        "Hi-vis yellow/orange\r",
-        "Reflective stripes\r",
-        "Durable 100% polyester\r",
-        "Multiple sizes available"
-      ],
-      "price": "R 225.00",
-      "unit": "per unit",
-      "image": "https://i.imgur.com/bu8Ei4n.jpeg",
-      "sku": "EDU-PPE-067",
-      "featured": true,
-      "stock": "In Stock"
-    },
-    {
-      "id": 9,
-      "name": "A3 Filing Cabinet - 4 Drawer",
-      "slug": "a3-filing-cabinet-4-drawer",
-      "category": "furniture",
-      "description": "Heavy-duty 4-drawer filing cabinet. Perfect for A3 documents and large capacity filing needs.",
-      "features": [
-        "4 spacious drawers\r",
-        "Heavy-duty steel construction\r",
-        "Secure locking mechanism\r",
-        "A3 size compatible"
-      ],
-      "price": "R 2,650.00",
-      "unit": "per unit",
-      "image": "https://i.imgur.com/XHWH4FD.jpeg",
-      "sku": "EDU-FUR-089",
-      "featured": false,
-      "stock": "In Stock"
-    },
-    {
-      "id": 10,
-      "name": "Disposable Gloves - Box of 100",
-      "slug": "disposable-gloves-box-of-100",
-      "category": "ppe",
-      "description": "Powder-free disposable gloves for hygiene and safety. Latex-free and suitable for all general applications.",
-      "features": [
-        "Powder-free\r",
-        "Latex-free\r",
-        "Available in multiple sizes\r",
-        "Box of 100"
-      ],
-      "price": "R 75.00",
-      "unit": "per box of 100",
-      "image": "https://i.imgur.com/Lhv0lFh.png",
-      "sku": "EDU-PPE-042",
-      "featured": true,
-      "stock": "In Stock"
-    },
-    {
-      "id": 11,
-      "name": "A4 Spiral Notebook - Pack of 10",
-      "slug": "a4-spiral-notebook-pack-of-10",
-      "category": "stationery",
-      "description": "Premium A4 spiral notebooks with durable cover and 80gsm pages. Perfect for note-taking and record keeping.",
-      "features": [
-        "80gsm paper\r",
-        "Durable cover\r",
-        "Spiral binding\r",
-        "Available in multiple colours"
-      ],
-      "price": "R 45.00",
-      "unit": "per pack of 10",
-      "image": "https://i.imgur.com/vAE2FME.jpeg",
-      "sku": "EDU-NTB-016",
-      "featured": false,
-      "stock": "In Stock"
-    },
-    {
-      "id": 12,
-      "name": "Toilet Paper - 48 Pack",
-      "slug": "toilet-paper-48-pack",
-      "category": "cleaning",
-      "description": "Premium 3-ply toilet paper in a convenient bulk pack. Soft, strong, and hygienic for business and institutional use.",
-      "features": [
-        "3-ply softness\r",
-        "Bulk pack of 48 rolls\r",
-        "Individually wrapped\r",
-        "Septic safe"
-      ],
-      "price": "R 145.00",
-      "unit": "per pack of 48",
-      "image": "https://i.imgur.com/iekMqof.png",
-      "sku": "EDU-HYG-092",
-      "featured": true,
-      "stock": "In Stock"
-    },
-    {
-      "id": 13,
+      "id": 1,
       "name": "Classic Eames High Back-Cushion",
       "slug": "classic-eames-high-back-cushion",
       "category": "furniture",
       "description": "Classic Eames high back with cushion specifications:\r\n\r\nTortion tilt mechanism with stabilizing bar for extra strength\r\nGas height adjustment\r\nStylish chrome arms\r\nChrome pyramid base\r\nMax user weight: 130kg",
       "features": [
-        "A variation of the Classic Eames high back chair including more cushioning, maximising comfort with a minimalistic appearance. Adds a touch of class to any modern office or boardroom."
+        "A variation of the Classic Eames high back chair including more cushioning, maximizing comfort with a minimalistic appearance. Adds a touch of class to any modern office or boardroom."
       ],
       "price": "5495.00",
-      "unit": "each",
-      "image": "https://i.imgur.com/aKZkxFp.jpeg",
-      "sku": "cha001",
+      "unit": "EA",
+      "image": "https://i.imgur.com/bcPlRtd.jpeg",
+      "sku": "CHA001",
       "featured": true,
       "stock": "In Stock"
     }
@@ -230,27 +21,27 @@
     {
       "id": "all",
       "name": "All Products",
-      "count": 12
+      "count": 1
     },
     {
       "id": "stationery",
       "name": "Stationery",
-      "count": 2
+      "count": 0
     },
     {
       "id": "furniture",
       "name": "Office Furniture",
-      "count": 4
+      "count": 1
     },
     {
       "id": "ppe",
       "name": "PPE & Safety",
-      "count": 3
+      "count": 0
     },
     {
       "id": "cleaning",
       "name": "Cleaning & Hygiene",
-      "count": 3
+      "count": 0
     }
   ]
 }

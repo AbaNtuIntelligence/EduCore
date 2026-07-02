@@ -1,49 +1,84 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { Redis } from '@upstash/redis';
 
-function getProductsData() {
+const redis = Redis.fromEnv();
+
+function getDefaultCategories() {
+  return [
+    { id: 'all', name: 'All Products', count: 0 },
+    { id: 'stationery', name: 'Stationery', count: 0 },
+    { id: 'furniture', name: 'Office Furniture', count: 0 },
+    { id: 'ppe', name: 'PPE & Safety', count: 0 },
+    { id: 'cleaning', name: 'Cleaning & Hygiene', count: 0 }
+  ];
+}
+
+async function getProducts() {
   try {
-    const dataPath = path.join(process.cwd(), 'data', 'products.json');
-    const data = fs.readFileSync(dataPath, 'utf8');
-    return JSON.parse(data);
+    const data = await redis.get('products');
+    console.log('📦 Raw data from Redis:', typeof data);
+    
+    // If no data, return default
+    if (!data) {
+      return { products: [], categories: getDefaultCategories() };
+    }
+    
+    // If data is already an object, return it
+    if (typeof data === 'object') {
+      console.log('✅ Data is already an object');
+      return data;
+    }
+    
+    // If data is a string, parse it
+    if (typeof data === 'string') {
+      try {
+        return JSON.parse(data);
+      } catch (e) {
+        console.error('❌ Failed to parse JSON:', e);
+        return { products: [], categories: getDefaultCategories() };
+      }
+    }
+    
+    return { products: [], categories: getDefaultCategories() };
   } catch (error) {
-    console.error('Error reading products data:', error);
-    return { products: [], categories: [] };
+    console.error('❌ Error getting products:', error);
+    return { products: [], categories: getDefaultCategories() };
   }
 }
 
-function saveProductsData(data: any) {
-  const dataPath = path.join(process.cwd(), 'data', 'products.json');
-  fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+async function saveProducts(data: any) {
+  try {
+    // Store as string to avoid parsing issues
+    await redis.set('products', JSON.stringify(data));
+    console.log('✅ Products saved to Redis');
+  } catch (error) {
+    console.error('❌ Error saving products:', error);
+    throw error;
+  }
 }
 
-// GET /api/products - Get all products (or single product if slug is provided)
 export async function GET(request: NextRequest) {
   try {
+    console.log('🚀 GET /api/products called');
     const url = new URL(request.url);
     const slug = url.searchParams.get('slug');
     
-    const data = getProductsData();
+    const data = await getProducts();
     
     if (slug) {
-      // Get single product by slug
       const product = data.products.find((p: any) => p.slug === slug);
-      
       if (!product) {
         return NextResponse.json(
           { error: 'Product not found' },
           { status: 404 }
         );
       }
-      
       return NextResponse.json(product);
     }
     
-    // Get all products
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error('❌ Error fetching products:', error);
     return NextResponse.json(
       { error: 'Failed to fetch products' },
       { status: 500 }
@@ -51,9 +86,9 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/products - Add a new product
 export async function POST(request: Request) {
   try {
+    console.log('🚀 POST /api/products called');
     const formData = await request.formData();
     
     const name = formData.get('name') as string;
@@ -67,7 +102,7 @@ export async function POST(request: Request) {
     const features = (formData.get('features') as string)?.split('\n').filter((f: string) => f.trim()) || [];
     const imageUrl = formData.get('imageUrl') as string || 'https://placehold.co/400x400/1A2B4C/FFFFFF?text=No+Image';
     
-    const data = getProductsData();
+    const data = await getProducts();
     const newId = data.products.length > 0 ? Math.max(...data.products.map((p: any) => p.id)) + 1 : 1;
     
     const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -103,11 +138,11 @@ export async function POST(request: Request) {
     const allCategory = data.categories.find((c: any) => c.id === 'all');
     if (allCategory) allCategory.count = data.products.length;
     
-    saveProductsData(data);
+    await saveProducts(data);
     
     return NextResponse.json({ success: true, product: newProduct });
   } catch (error) {
-    console.error('Error adding product:', error);
+    console.error('❌ Error adding product:', error);
     return NextResponse.json(
       { error: 'Failed to add product' },
       { status: 500 }
@@ -115,18 +150,13 @@ export async function POST(request: Request) {
   }
 }
 
-// PUT /api/products - Update a product
 export async function PUT(request: Request) {
   try {
-    console.log('=== PUT REQUEST ===');
-    
+    console.log('🚀 PUT /api/products called');
     const formData = await request.formData();
     const idParam = formData.get('id') as string;
     
-    console.log('ID param:', idParam);
-    
     if (!idParam) {
-      console.log('❌ No ID provided');
       return NextResponse.json(
         { error: 'Product ID is required' },
         { status: 400 }
@@ -134,31 +164,16 @@ export async function PUT(request: Request) {
     }
     
     const id = parseInt(idParam);
-    console.log('Product ID:', id);
-    
-    const data = getProductsData();
-    console.log('Total products:', data.products.length);
-    console.log('Product IDs:', data.products.map((p: any) => p.id).join(', '));
-    
+    const data = await getProducts();
     const index = data.products.findIndex((p: any) => p.id === id);
-    console.log('Found at index:', index);
     
     if (index === -1) {
-      console.log('❌ Product not found with ID:', id);
       return NextResponse.json(
         { error: 'Product not found' },
         { status: 404 }
       );
     }
 
-    const imageUrl = formData.get('imageUrl') as string;
-    console.log('New image URL:', imageUrl);
-    
-    if (imageUrl) {
-      data.products[index].image = imageUrl;
-    }
-    
-    // Update other fields if provided
     const name = formData.get('name') as string;
     const category = formData.get('category') as string;
     const description = formData.get('description') as string;
@@ -169,6 +184,7 @@ export async function PUT(request: Request) {
     const featured = formData.get('featured') === 'true';
     const featuresText = formData.get('features') as string || '';
     const features = featuresText.split('\n').filter((f: string) => f.trim());
+    const imageUrl = formData.get('imageUrl') as string;
     
     if (name) data.products[index].name = name;
     if (category) data.products[index].category = category;
@@ -179,30 +195,44 @@ export async function PUT(request: Request) {
     if (stock) data.products[index].stock = stock;
     if (featured !== undefined) data.products[index].featured = featured;
     if (features.length > 0) data.products[index].features = features;
+    if (imageUrl) data.products[index].image = imageUrl;
     
     if (name) {
       data.products[index].slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     }
     
-    saveProductsData(data);
-    console.log('✅ Product updated successfully!');
+    // Update categories
+    const categoryMap = new Map<string, number>();
+    data.products.forEach((p: any) => {
+      categoryMap.set(p.category, (categoryMap.get(p.category) || 0) + 1);
+    });
+    
+    data.categories = data.categories.map((cat: any) => ({
+      ...cat,
+      count: categoryMap.get(cat.id) || 0,
+    }));
+    
+    const allCategory = data.categories.find((c: any) => c.id === 'all');
+    if (allCategory) allCategory.count = data.products.length;
+    
+    await saveProducts(data);
     
     return NextResponse.json({ 
       success: true, 
       product: data.products[index] 
     });
   } catch (error) {
-    console.error('Error updating product:', error);
+    console.error('❌ Error updating product:', error);
     return NextResponse.json(
-      { error: 'Failed to update product: ' + (error as Error).message },
+      { error: 'Failed to update product' },
       { status: 500 }
     );
   }
 }
 
-// DELETE /api/products - Delete a product
 export async function DELETE(request: NextRequest) {
   try {
+    console.log('🚀 DELETE /api/products called');
     const url = new URL(request.url);
     const id = url.searchParams.get('id');
     
@@ -214,7 +244,7 @@ export async function DELETE(request: NextRequest) {
     }
     
     const productId = parseInt(id);
-    const data = getProductsData();
+    const data = await getProducts();
     const index = data.products.findIndex((p: any) => p.id === productId);
     
     if (index === -1) {
@@ -225,10 +255,26 @@ export async function DELETE(request: NextRequest) {
     }
     
     data.products.splice(index, 1);
-    saveProductsData(data);
+    
+    // Update categories
+    const categoryMap = new Map<string, number>();
+    data.products.forEach((p: any) => {
+      categoryMap.set(p.category, (categoryMap.get(p.category) || 0) + 1);
+    });
+    
+    data.categories = data.categories.map((cat: any) => ({
+      ...cat,
+      count: categoryMap.get(cat.id) || 0,
+    }));
+    
+    const allCategory = data.categories.find((c: any) => c.id === 'all');
+    if (allCategory) allCategory.count = data.products.length;
+    
+    await saveProducts(data);
     
     return NextResponse.json({ success: true });
   } catch (error) {
+    console.error('❌ Error deleting product:', error);
     return NextResponse.json(
       { error: 'Failed to delete product' },
       { status: 500 }
